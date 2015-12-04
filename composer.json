@@ -14,5 +14,10 @@
             "name": "Dave Smith-Hayes",
             "email": "dsmithhayes@propellerideas.com"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "Extended\\": "src/"
+        }
+    }
 }
