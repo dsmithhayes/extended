@@ -3,6 +3,7 @@
 namespace Extended;
 
 use Extended\Iterator\ControlIterator;
+use Extended\Exception\IteratorException;
 
 /**
  * A basic LinkedList that implemented the ControlIterator interface.
@@ -17,11 +18,17 @@ class LinkedList implements ControlIterator
     /**
      * @var array The array that represents the list.
      */
-    private $list = [];
+    private $list;
 
     /**
-     * Implemented from the Iterator interface
+     * @param array An array of items for the list
      */
+    public function __constructor($list = [])
+    {
+        $this->list = array_values($list);
+    }
+
+    /** Implemented from the Iterator interface */
 
     /**
      * @return Mixed The current item in the list
@@ -63,9 +70,7 @@ class LinkedList implements ControlIterator
         return $this->key;
     }
 
-    /**
-     * Implemented from the ControlInterator interface
-     */
+    /** Implemented from the ControlInterator interface */
 
     /**
      * @return bool
@@ -83,21 +88,33 @@ class LinkedList implements ControlIterator
         return ($this->key === (count($this->list) - 1)) ? true : false;
     }
 
+    /** Custom Methods for the LinkedList Class */
+
     /**
      * @param  int   The location in the list to return
      * @return mixed The item in the list.
+     * @throws IteratorException
      */
     public function get($key)
     {
+        if (!array_key_exists($key)) {
+            throw new IteratorException('Not a valid item in the list.');
+        }
+
         return $this->list[$key];
     }
 
     /**
      * @param int   The position in the list
      * @param mixed The item to set
+     * @throws IteratorException
      */
     public function set($key, $value)
     {
+        if (!array_key_exists($key, $this->list)) {
+            throw new IteratorException('Not a valid item in the list.');
+        }
+
         $this->list[$key] = $value;
     }
 
