@@ -23,9 +23,11 @@ class LinkedList implements ControlIterator
     /**
      * @param array An array of items for the list
      */
-    public function __constructor($list = [])
+    public function __construct($list = [])
     {
-        $this->list = array_values($list);
+        foreach ($list as $l) {
+            $this->add($l);
+        }
     }
 
     /** Implemented from the Iterator interface */
