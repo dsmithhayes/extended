@@ -72,7 +72,7 @@ class LinkedList implements ControlIterator
      */
     public function first()
     {
-        return ($key === 0) ? true : false;
+        return ($this->key === 0) ? true : false;
     }
 
     /**
@@ -80,6 +80,34 @@ class LinkedList implements ControlIterator
      */
     public function last()
     {
-        return ($key === (count($this->list) - 1)) ? true : false;
+        return ($this->key === (count($this->list) - 1)) ? true : false;
     }
+
+    /**
+     * @param  int   The location in the list to return
+     * @return mixed The item in the list.
+     */
+    public function get($key)
+    {
+        return $this->list[$key];
+    }
+
+    /**
+     * @param int   The position in the list
+     * @param mixed The item to set
+     */
+    public function set($key, $value)
+    {
+        $this->list[$key] = $value;
+    }
+
+    /**
+     * @param mixed An item to add to the list
+     */
+    public function add($value)
+    {
+        $this->list[] = $value;
+    }
+
+
 }
