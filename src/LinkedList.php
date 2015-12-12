@@ -3,12 +3,12 @@
 namespace Extended;
 
 use Extended\Iterator\ControlIterator;
-use Extended\Exception\IteratorException;
+use Extended\Iterator\AccessIterator;
 
 /**
  * A basic LinkedList that implemented the ControlIterator interface.
  */
-class LinkedList implements ControlIterator
+class LinkedList implements ControlIterator, AccessIterator
 {
     /**
      * @var int The key of the list
@@ -25,8 +25,10 @@ class LinkedList implements ControlIterator
      */
     public function __construct($list = [])
     {
-        foreach ($list as $l) {
-            $this->add($l);
+        if (!empty($list)) {
+            foreach ($list as $l) {
+                $this->add($l);
+            }
         }
     }
 
@@ -72,7 +74,7 @@ class LinkedList implements ControlIterator
         return $this->key;
     }
 
-    /** Implemented from the ControlInterator interface */
+    /** Implemented from the ControlIterator interface */
 
     /**
      * @return bool
@@ -90,33 +92,39 @@ class LinkedList implements ControlIterator
         return ($this->key === (count($this->list) - 1)) ? true : false;
     }
 
-    /** Custom Methods for the LinkedList Class */
+    /** Implemented from the AccessIterator interface */
 
     /**
-     * @param  int   The location in the list to return
-     * @return mixed The item in the list.
-     * @throws IteratorException
+     * @return mixed
+     */
+    public function getFirst()
+    {
+        return $this->list[0];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLast()
+    {
+        return $this->list[count($this->list) - 1];
+    }
+
+    /**
+     * @param  int
+     * @return mixed
      */
     public function get($key)
     {
-        if (!array_key_exists($key)) {
-            throw new IteratorException('Not a valid item in the list.');
-        }
-
         return $this->list[$key];
     }
 
     /**
      * @param int   The position in the list
      * @param mixed The item to set
-     * @throws IteratorException
      */
     public function set($key, $value)
     {
-        if (!array_key_exists($key, $this->list)) {
-            throw new IteratorException('Not a valid item in the list.');
-        }
-
         $this->list[$key] = $value;
     }
 

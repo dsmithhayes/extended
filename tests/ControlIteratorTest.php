@@ -59,7 +59,7 @@ class ControlerIteratorTest extends PHPUnit_Framework_TestCase
     {
         foreach ($list as $l) {
             if ($list->first()) {
-                $this->assertEquals(1, $list->current());
+                $this->assertEquals($this->first, $list->current());
             }
         }
 
@@ -79,6 +79,23 @@ class ControlerIteratorTest extends PHPUnit_Framework_TestCase
         return $list;
     }
 
+    /**
+     * @depends testForeachFalse
+     */
+    public function testGetFirst($list)
+    {
+        $this->assertEquals($this->first, $list->getFirst());
+        return $list;
+    }
+
+    /**
+     * @depends testGetFirst
+     */
+    public function testGetLast($list)
+    {
+        $this->assertEquals($this->last, $list->getLast());
+        return $list;
+    }
 
     public function testArrayConstruction()
     {
