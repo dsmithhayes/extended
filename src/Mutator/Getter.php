@@ -3,16 +3,12 @@
 namespace Extended\Mutator;
 
 /**
- * This interface defines just one method, `get()`, which is used to return a
- * property of a class.
+ *
  */
-trait Getter
+interface Getter
 {
     /**
-     * @param string $propertyName The identifier of the property to retrieve
+     * @param string $key The identifier of the property to retrieve
      */
-    public function get($propertyName)
-    {
-        return $this->{$propertyName};
-    }
+    public function get($key);
 }

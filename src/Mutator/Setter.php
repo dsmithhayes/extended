@@ -2,10 +2,7 @@
 
 namespace Extended\Mutator;
 
-trait Setter
+interface Setter
 {
-    public function set($propertyName, $value)
-    {
-        $this->{$propertyName} = $value;
-    }
+    public function set($key, $value);
 }
