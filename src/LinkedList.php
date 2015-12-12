@@ -4,13 +4,11 @@ namespace Extended;
 
 use Extended\Iterator\ControlIterator;
 use Extended\Iterator\AccessIterator;
-use Extended\Mutator\Getter;
-use Extended\Mutator\Setter;
 
 /**
  * A basic LinkedList that implemented the ControlIterator interface.
  */
-class LinkedList implements ControlIterator, AccessIterator, Getter, Setter
+class LinkedList implements ControlIterator, AccessIterator
 {
     /**
      * @var int The key of the list
