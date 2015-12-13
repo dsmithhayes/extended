@@ -2,7 +2,7 @@
 
 use Extended\LinkedList;
 
-class ControlerIteratorTest extends PHPUnit_Framework_TestCase
+class LinkedListTest extends PHPUnit_Framework_TestCase
 {
     protected $first = 'first';
     protected $last  = 'last';
