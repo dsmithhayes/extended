@@ -13,12 +13,12 @@ class LinkedList implements ControlIterator, AccessIterator
     /**
      * @var int The key of the list
      */
-    private $key = 0;
+    protected $key = 0;
 
     /**
      * @var array The array that represents the list.
      */
-    private $list;
+    protected $list;
 
     /**
      * @param array An array of items for the list
