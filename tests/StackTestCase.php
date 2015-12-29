@@ -32,9 +32,19 @@ class StackTestCase extends PHPUnit_Framework_TestCase
     /**
      * @depends testStackPopAfterPop
      */
-    public function testStackPointer($stack)
+    public function testStackGetPointer($stack)
     {
         $this->assertEquals(0, $stack->getPointer());
+        return $stack;
+    }
+
+    /**
+     * @depends testStackGetPointer
+     */
+    public function testStackPush($stack)
+    {
+        $stack->push(1);
+        $this->assertEquals(1, $stack->getPointer());
         return $stack;
     }
 }

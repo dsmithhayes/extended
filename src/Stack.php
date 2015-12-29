@@ -46,7 +46,7 @@ class Stack
      */
     public function push($whatever)
     {
-        $this->stack[] = $whatever;
+        $this->stack[$this->pointer++] = $whatever;
     }
 
     /**
