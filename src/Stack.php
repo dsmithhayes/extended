@@ -16,7 +16,7 @@ class Stack
     /**
      * @var int The stack-pointer
      */
-    protected $stackPointer;
+    protected $pointer;
 
     /**
      * @param array $stack A list of items to use as a stack.
@@ -24,7 +24,7 @@ class Stack
     public function __construct($stack = [])
     {
         $this->stack = array_values($stack);
-        $this->stackPointer = (count($stack) - 1);
+        $this->pointer = (count($stack) - 1);
     }
 
     /**
@@ -35,8 +35,8 @@ class Stack
      */
     public function pop()
     {
-        $temp = $this->stack[$this->stackPointer];
-        unset($this->stack[$this->stackPointer--]);
+        $temp = $this->stack[$this->pointer];
+        unset($this->stack[$this->pointer--]);      // decrements here
         $this->stack = array_values($this->stack);
         return $temp;
     }
@@ -51,25 +51,58 @@ class Stack
 
     /**
      * Sets the internal stack-pointer back to 0.
+     *
+     * @return bool True if the pointer resets to 0
      */
     public function reset()
     {
-        $this->stackPointer = 0;
+        $this->pointer = 0;
+        return true;
     }
 
     /**
      * @return int The current position of the stack-pointer.
      */
-    public function getStackPointer()
+    public function getPointer()
     {
-        return $this->stackPointer;
+        return $this->pointer;
     }
 
     /**
      * @param int $position The new position of the stack-pointer.
+     * @return bool True if the stack pointer is set to a valid number
      */
-    public function setStackPointer($position)
+    public function setPointer($position)
     {
+        if ($position >= count($this->stack)) {
 
+        }
+
+        $this->stackPointer = $position;
+        return true;
+    }
+
+    /**
+     * Increments the stack-pointer. This is a fail-safe method.
+     */
+    public function incrementPointer()
+    {
+        $this->pointer++;
+
+        if ($this->pointer >= count($this->stack)) {
+            $this->pointer = (count($this->stack) - 1);
+        }
+    }
+
+    /**
+     * Decrements the stack-pointer. This is a fail-safe method.
+     */
+    public function decrementPointer()
+    {
+        $this->pointer--;
+
+        if ($this->pointer < 0) {
+            $this->pointer = 0;
+        }
     }
 }

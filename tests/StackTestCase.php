@@ -16,7 +16,7 @@ class StackTestCase extends PHPUnit_Framework_TestCase
      */
     public function testStackReset($stack)
     {
-        $this->assertEquals(1, $stack->getStackPointer());
+        $this->assertEquals(1, $stack->getPointer());
         return $stack;
     }
 
@@ -34,7 +34,7 @@ class StackTestCase extends PHPUnit_Framework_TestCase
      */
     public function testStackPointer($stack)
     {
-        $this->assertEquals(0, $stack->getStackPointer());
+        $this->assertEquals(0, $stack->getPointer());
         return $stack;
     }
 }
