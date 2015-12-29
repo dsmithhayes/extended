@@ -28,4 +28,13 @@ class StackTestCase extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $stack->pop());
         return $stack;
     }
+
+    /**
+     * @depends testStackPopAfterPop
+     */
+    public function testStackPointer($stack)
+    {
+        $this->assertEquals(0, $stack->getStackPointer());
+        return $stack;
+    }
 }
