@@ -2,6 +2,8 @@
 
 namespace Extended;
 
+use Extended\Exception\StackException;
+
 /**
  * If you have studied computer science in any capacity, you should know what a
  * stack is and how it works. This is a PHP implementation of a stack.
@@ -71,6 +73,7 @@ class Stack
     /**
      * @param int $position The new position of the stack-pointer.
      * @return bool True if the stack pointer is set to a valid number
+     * @throws StackException
      */
     public function setPointer($position)
     {
