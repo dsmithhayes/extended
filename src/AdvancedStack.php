@@ -2,13 +2,15 @@
 
 namespace Extended;
 
+use Extended\BasicStack;
 use Extended\Exception\StackException;
 
 /**
- * If you have studied computer science in any capacity, you should know what a
- * stack is and how it works. This is a PHP implementation of a stack.
+ * The AdvancedStack object contains the ability to manipulate and control the
+ * internal stack-pointer to the stack. This creates an interable object that
+ * can be traversed.
  */
-class Stack
+class AdvancedStack extends BasicStack implements \Iterator
 {
     /**
      * @var array The internal stack of the object
@@ -44,11 +46,11 @@ class Stack
     }
 
     /**
-     * @param mixed $whatever The item to push to the top of the stack
+     * @param mixed $value The item to push to the top of the stack
      */
-    public function push($whatever)
+    public function push($value)
     {
-        $this->stack[$this->pointer++] = $whatever;
+        $this->stack[$this->pointer++] = $value;
     }
 
     /**
