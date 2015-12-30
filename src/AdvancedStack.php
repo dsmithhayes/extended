@@ -7,26 +7,15 @@ use Extended\Exception\StackException;
 
 /**
  * The AdvancedStack object contains the ability to manipulate and control the
- * internal stack-pointer to the stack. This creates an interable object that
+ * internal stack pointer to the stack. This creates an interable object that
  * can be traversed.
  */
 class AdvancedStack extends BasicStack implements \Iterator
 {
-    /**
-     * Resets the entire stack, and stack pointer.
-     */
-    public function resetStack()
+    public function reset()
     {
         $this->stack = [];
-        $this->pointer = 0;
-    }
-
-    /**
-     * Sets the internal stack-pointer back to 0.
-     */
-    public function resetPointer()
-    {
-        $this->pointer = 0;
+        $this->rewind();
     }
 
     /**
@@ -81,7 +70,7 @@ class AdvancedStack extends BasicStack implements \Iterator
 
     public function rewind()
     {
-        $this->resetPointer();
+        $this->pointer = 0;
     }
 
     public function valid()

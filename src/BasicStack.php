@@ -5,7 +5,7 @@ namespace Extended;
 use Extended\Structures\Stack;
 
 /**
- * The BasicStack object represents a very slim implementation of a stack
+ * The BasicStack object represents a very slim implementation of a stack.
  */
 class BasicStack implements Stack
 {
