@@ -17,11 +17,13 @@ class BasicStack implements Stack
 
     public function pop()
     {
-
+        $item = $this->stack[$this->pointer];
+        unset($this->stack[$this->pointer--]);      // decrements here
+        return $item;
     }
 
     public function push($value)
     {
-
+        $this->stack[++$this->pointer] = $value;
     }
 }

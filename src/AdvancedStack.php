@@ -13,44 +13,12 @@ use Extended\Exception\StackException;
 class AdvancedStack extends BasicStack implements \Iterator
 {
     /**
-     * @var array The internal stack of the object
+     * Resets the entire stack.
      */
-    protected $stack;
-
-    /**
-     * @var int The stack-pointer
-     */
-    protected $pointer;
-
-    /**
-     * @param array $stack A list of items to use as a stack.
-     */
-    public function __construct($stack = [])
+    public function resetStack()
     {
-        $this->stack = array_values($stack);
-        $this->pointer = (count($stack) - 1);
-    }
-
-    /**
-     * This will not only return the item at the top of the stack, but also
-     * unset the variable.
-     *
-     * @return mixed The top item of the stack
-     */
-    public function pop()
-    {
-        $temp = $this->stack[$this->pointer];
-        unset($this->stack[$this->pointer--]);      // decrements here
-        $this->stack = array_values($this->stack);
-        return $temp;
-    }
-
-    /**
-     * @param mixed $value The item to push to the top of the stack
-     */
-    public function push($value)
-    {
-        $this->stack[$this->pointer++] = $value;
+        $this->stack = [];
+        $this->pointer = 0;
     }
 
     /**
@@ -58,7 +26,7 @@ class AdvancedStack extends BasicStack implements \Iterator
      *
      * @return bool True if the pointer resets to 0
      */
-    public function reset()
+    public function resetPointer()
     {
         $this->pointer = 0;
         return true;
@@ -73,17 +41,22 @@ class AdvancedStack extends BasicStack implements \Iterator
     }
 
     /**
-     * @param int $position The new position of the stack-pointer.
-     * @return bool True if the stack pointer is set to a valid number
-     * @throws StackException
+     * Sets the stack pointer. This is a fail-safe method.
+     *
+     * @param  int  $position The new position of the stack-pointer
+     * @return bool           True if the stack pointer is set to a valid number
      */
     public function setPointer($position)
     {
-        if ($position >= count($this->stack)) {
-
+        if ($position < 0) {
+            $positon = 0;
         }
 
-        $this->stackPointer = $position;
+        if ($position > (count($this->stack) - 1)) {
+            $position = (count($this->stack) - 1);
+        }
+
+        $this->pointer = $position;
         return true;
     }
 
@@ -109,5 +82,17 @@ class AdvancedStack extends BasicStack implements \Iterator
         if ($this->pointer < 0) {
             $this->pointer = 0;
         }
+    }
+
+    protected function pointerCeiling($value)
+    {
+        $cieling = count($this->stack) - 1;
+
+        return ($value > $cieling) ? $cieling : $value;
+    }
+
+    protected function pointerFloor($value)
+    {
+        return ($value < 0) ? 0 : $value;
     }
 }
