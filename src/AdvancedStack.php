@@ -13,7 +13,7 @@ use Extended\Exception\StackException;
 class AdvancedStack extends BasicStack implements \Iterator
 {
     /**
-     * Resets the entire stack.
+     * Resets the entire stack, and stack pointer.
      */
     public function resetStack()
     {
@@ -29,7 +29,6 @@ class AdvancedStack extends BasicStack implements \Iterator
     public function resetPointer()
     {
         $this->pointer = 0;
-        return true;
     }
 
     /**
@@ -43,21 +42,14 @@ class AdvancedStack extends BasicStack implements \Iterator
     /**
      * Sets the stack pointer. This is a fail-safe method.
      *
-     * @param  int  $position The new position of the stack-pointer
-     * @return bool           True if the stack pointer is set to a valid number
+     * @param int $position The new position of the stack-pointer
      */
     public function setPointer($position)
     {
-        if ($position < 0) {
-            $positon = 0;
-        }
-
-        if ($position > (count($this->stack) - 1)) {
-            $position = (count($this->stack) - 1);
-        }
+        $position = $this->pointerFloor($position);
+        $position = $this->pointerCeiling($position);
 
         $this->pointer = $position;
-        return true;
     }
 
     /**
@@ -65,11 +57,7 @@ class AdvancedStack extends BasicStack implements \Iterator
      */
     public function incrementPointer()
     {
-        $this->pointer++;
-
-        if ($this->pointer >= count($this->stack)) {
-            $this->pointer = (count($this->stack) - 1);
-        }
+        $this->pointer = $this->pointerCeiling(++$this->pointer);
     }
 
     /**
@@ -77,22 +65,6 @@ class AdvancedStack extends BasicStack implements \Iterator
      */
     public function decrementPointer()
     {
-        $this->pointer--;
-
-        if ($this->pointer < 0) {
-            $this->pointer = 0;
-        }
-    }
-
-    protected function pointerCeiling($value)
-    {
-        $cieling = count($this->stack) - 1;
-
-        return ($value > $cieling) ? $cieling : $value;
-    }
-
-    protected function pointerFloor($value)
-    {
-        return ($value < 0) ? 0 : $value;
+        $this->pointer = $this->pointerFloor(--$this->pointer);
     }
 }
