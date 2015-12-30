@@ -23,20 +23,10 @@ class AdvancedStack extends BasicStack implements \Iterator
 
     /**
      * Sets the internal stack-pointer back to 0.
-     *
-     * @return bool True if the pointer resets to 0
      */
     public function resetPointer()
     {
         $this->pointer = 0;
-    }
-
-    /**
-     * @return int The current position of the stack-pointer.
-     */
-    public function getPointer()
-    {
-        return $this->pointer;
     }
 
     /**
@@ -66,5 +56,36 @@ class AdvancedStack extends BasicStack implements \Iterator
     public function decrementPointer()
     {
         $this->pointer = $this->pointerFloor(--$this->pointer);
+    }
+
+    /**
+     * @return mixed The current item in the stack
+     */
+    public function current()
+    {
+        return $this->stack[$this->pointer];
+    }
+
+    /**
+     * @return int The current position of the stack pointer
+     */
+    public function key()
+    {
+        return $this->pointer;
+    }
+
+    public function next()
+    {
+        ++$this->pointer;
+    }
+
+    public function rewind()
+    {
+        $this->resetPointer();
+    }
+
+    public function valid()
+    {
+        return (isset($this->stack[$this->pointer])) ? true : false;
     }
 }
