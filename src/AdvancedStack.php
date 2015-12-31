@@ -3,7 +3,6 @@
 namespace Extended;
 
 use Extended\BasicStack;
-use Extended\Exception\StackException;
 
 /**
  * The AdvancedStack object contains the ability to manipulate and control the

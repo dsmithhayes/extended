@@ -2,7 +2,7 @@
 
 namespace Extended;
 
-use Extended\Structures\Stack;
+use Extended\Collections\Stack;
 
 /**
  * The BasicStack object represents a very slim implementation of a stack.

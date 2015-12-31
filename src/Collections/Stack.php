@@ -1,6 +1,6 @@
 <?php
 
-namespace Extended\Structures;
+namespace Extended\Collections;
 
 /**
  * Stacks are data structures that have a first-in / last-out philosophy. You
