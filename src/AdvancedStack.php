@@ -5,9 +5,9 @@ namespace Extended;
 use Extended\BasicStack;
 
 /**
- * The AdvancedStack object contains the ability to manipulate and control the
- * internal stack pointer to the stack. This creates an interable object that
- * can be traversed.
+ * The advanced stack is an iterable object that allows you to set a size for
+ * the stack. This can be handy if you need to refine the amount of `x` inside
+ * the stack, and also to iterate over all the values within the stack.
  */
 class AdvancedStack extends BasicStack implements \Iterator
 {
@@ -18,35 +18,6 @@ class AdvancedStack extends BasicStack implements \Iterator
     {
         $this->stack = [];
         $this->pointer = 0;
-    }
-
-    /**
-     * Sets the stack pointer. This is a fail-safe method.
-     *
-     * @param int $position The new position of the stack-pointer
-     */
-    public function setPointer($position)
-    {
-        $position = $this->pointerFloor($position);
-        $position = $this->pointerCeiling($position);
-
-        $this->pointer = $position;
-    }
-
-    /**
-     * Increments the stack-pointer. This is a fail-safe method.
-     */
-    public function incrementPointer()
-    {
-        $this->pointer = $this->pointerCeiling(++$this->pointer);
-    }
-
-    /**
-     * Decrements the stack-pointer. This is a fail-safe method.
-     */
-    public function decrementPointer()
-    {
-        $this->pointer = $this->pointerFloor(--$this->pointer);
     }
 
     /**
@@ -88,6 +59,13 @@ class AdvancedStack extends BasicStack implements \Iterator
      */
     public function valid()
     {
-        return ($this->pointer < 0) ? false : true;
+        if ($this->pointer < 0) {
+            $valid = false;
+            $this->pointer = 0;
+        } else {
+            $valid = true;
+        }
+
+        return $valid;
     }
 }
