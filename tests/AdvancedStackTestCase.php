@@ -16,6 +16,7 @@ class AdvancedStackTestCase extends PHPUnit_Framework_TestCase
      */
     public function testIteration($stack)
     {
+        // only testes the top of the stack, quits
         foreach ($stack as $s) {
             $this->assertEquals(3, $s);
             break;

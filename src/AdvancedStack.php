@@ -4,11 +4,6 @@ namespace Extended;
 
 use Extended\BasicStack;
 
-/**
- * The advanced stack is an iterable object that allows you to set a size for
- * the stack. This can be handy if you need to refine the amount of `x` inside
- * the stack, and also to iterate over all the values within the stack.
- */
 class AdvancedStack extends BasicStack implements \Iterator
 {
     /**
