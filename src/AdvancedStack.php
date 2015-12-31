@@ -17,7 +17,7 @@ class AdvancedStack extends BasicStack implements \Iterator
     public function reset()
     {
         $this->stack = [];
-        $this->rewind();
+        $this->pointer = 0;
     }
 
     /**

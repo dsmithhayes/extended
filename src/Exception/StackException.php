@@ -2,7 +2,4 @@
 
 namespace Extended\Exception;
 
-class StackException extends \Exception
-{
-    $this->code = 3;
-}
+class StackException extends \Exception { }

@@ -2,7 +2,4 @@
 
 namespace Extended\Exception;
 
-class MutatorException extends \Exception
-{
-    $this->code = 2;
-}
+class MutatorException extends \Exception { }

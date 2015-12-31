@@ -3,6 +3,7 @@
 namespace Extended;
 
 use Extended\Collections\Stack;
+use Extended\Exception\StackException;
 
 /**
  * The BasicStack object represents a very slim implementation of a stack.
@@ -33,6 +34,10 @@ class BasicStack implements Stack
      */
     public function pop()
     {
+        if (empty($this->stack)) {
+            throw new StackException('The stack is empty.');
+        }
+
         $item = $this->stack[$this->pointer];
         unset($this->stack[$this->pointer--]);      // decrements here
         $this->pointer = $this->pointerFloor($this->pointer);

@@ -2,7 +2,4 @@
 
 namespace Extended\Exception;
 
-class IteratorException extends \Exception
-{
-    $this->code = 1;
-}
+class IteratorException extends \Exception { }
