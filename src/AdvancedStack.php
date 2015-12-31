@@ -68,7 +68,7 @@ class AdvancedStack extends BasicStack implements \Iterator
      */
     public function next()
     {
-        ++$this->pointer;
+        --$this->pointer;
     }
 
     /**
@@ -76,7 +76,7 @@ class AdvancedStack extends BasicStack implements \Iterator
      */
     public function rewind()
     {
-        $this->pointer = 0;
+        $this->pointer = (count($this->stack) - 1);
     }
 
     /**
@@ -86,6 +86,6 @@ class AdvancedStack extends BasicStack implements \Iterator
      */
     public function valid()
     {
-        return (isset($this->stack[$this->pointer])) ? true : false;
+        return ($this->pointer < 0) ? false : true;
     }
 }
