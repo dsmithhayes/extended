@@ -9,9 +9,12 @@ namespace Extended\Collections;
 interface Queue
 {
     /**
-     *
+     * Adds an item to the top of the list
      */
     public function enqueue();
 
+    /**
+     * Removes an item from the bottom of the list
+     */
     public function dequeue();
 }

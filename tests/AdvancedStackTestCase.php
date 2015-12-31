@@ -38,9 +38,23 @@ class AdvancedStackTestCase extends PHPUnit_Framework_TestCase
     /**
      * @depends testSetPointer
      */
+    public function testIncrementPointer($stack)
+    {
+        $stack->incrementPointer();
+        $this->assertEquals(1, $stack->pop());
+
+        return $stack;
+    }
+
+    /**
+     * @depends testIncrementPointer
+     * @expectedException \Extended\Exception\StackException
+     */
     public function testReset($stack)
     {
         $stack->reset();
         $stack->pop();
+
+        return $stack;
     }
 }
