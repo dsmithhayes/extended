@@ -11,6 +11,9 @@ use Extended\BasicStack;
  */
 class AdvancedStack extends BasicStack implements \Iterator
 {
+    /**
+     * Resets the entire stack.
+     */
     public function reset()
     {
         $this->stack = [];
@@ -63,7 +66,7 @@ class AdvancedStack extends BasicStack implements \Iterator
     }
 
     /**
-     * Increments the stack pointer to the next value in the list
+     * Decrements the stack pointer to the next value in the list.
      */
     public function next()
     {
@@ -71,7 +74,7 @@ class AdvancedStack extends BasicStack implements \Iterator
     }
 
     /**
-     * Resets the stack pointer to the beginning.
+     * Resets the stack pointer to the top of the stack.
      */
     public function rewind()
     {

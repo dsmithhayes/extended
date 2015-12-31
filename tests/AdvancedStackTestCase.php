@@ -23,4 +23,24 @@ class AdvancedStackTestCase extends PHPUnit_Framework_TestCase
 
         return $stack;
     }
+
+    /**
+     * @depends testIteration
+     */
+    public function testSetPointer($stack)
+    {
+        $stack->setPointer(0);
+        $this->assertEquals(0, $stack->pop());
+
+        return $stack;
+    }
+
+    /**
+     * @depends testSetPointer
+     */
+    public function testReset($stack)
+    {
+        $stack->reset();
+        $stack->pop();
+    }
 }
