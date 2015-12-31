@@ -63,16 +63,27 @@ class AdvancedStack extends BasicStack implements \Iterator
         return $this->pointer;
     }
 
+    /**
+     * Increments the stack pointer to the next value in the list
+     */
     public function next()
     {
         ++$this->pointer;
     }
 
+    /**
+     * Resets the stack pointer to the beginning.
+     */
     public function rewind()
     {
         $this->pointer = 0;
     }
 
+    /**
+     * Checks if the stack pointer points to a valid location in the stack
+     *
+     * @return bool True if the item exists in the stack
+     */
     public function valid()
     {
         return (isset($this->stack[$this->pointer])) ? true : false;
