@@ -11,17 +11,20 @@ use Extended\Iterator\AccessIterator;
 class LinkedList implements ControlIterator, AccessIterator
 {
     /**
-     * @var int The key of the list
+     * @var int
+     *      The key of the list
      */
     protected $key = 0;
 
     /**
-     * @var array The array that represents the list.
+     * @var array
+     *      The array that represents the list.
      */
     protected $list;
 
     /**
-     * @param array An array of items for the list
+     * @param array $list
+     *      An array of items for the list
      */
     public function __construct($list = [])
     {
@@ -29,13 +32,16 @@ class LinkedList implements ControlIterator, AccessIterator
             foreach ($list as $l) {
                 $this->add($l);
             }
+        } else {
+            $this->list = $list;
         }
     }
 
     /** Implemented from the Iterator interface */
 
     /**
-     * @return Mixed The current item in the list
+     * @return mixed
+     *      The current item in the list
      */
     public function current()
     {
@@ -59,7 +65,8 @@ class LinkedList implements ControlIterator, AccessIterator
     }
 
     /**
-     * @return bool True if the current position is a valid list item
+     * @return bool
+     *      True if the current position is a valid list item
      */
     public function valid()
     {
@@ -67,17 +74,21 @@ class LinkedList implements ControlIterator, AccessIterator
     }
 
     /**
-     * @return int The current position in the list
+     * @return int
+     *      The current position in the list
      */
     public function key()
     {
         return $this->key;
     }
 
-    /** Implemented from the ControlIterator interface */
+    /**
+     * Implemented from the ControlIterator interface
+     */
 
     /**
      * @return bool
+     *      True if the key is set to the first record
      */
     public function first()
     {
