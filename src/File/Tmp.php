@@ -2,6 +2,8 @@
 
 namespace Extended\File;
 
+use Extended\Exception\FileException;
+
 class Tmp extends File
 {
     public function __construct()
@@ -13,6 +15,6 @@ class Tmp extends File
     public function save($fileName)
     {
         $this->fileName = $fileName;
-        $this->save();
+        parent::save();
     }
 }
