@@ -2,6 +2,8 @@
 
 namespace Extended\File;
 
+use Extended\FileException;
+
 /**
  * Some times you want a more OOP way to deal with files in PHP. That's what
  * this is.
@@ -10,10 +12,10 @@ namespace Extended\File;
 class File
 {
     /**
-     * @var resource $handle
+     * @var resource $fileHandle
      *      The open file resource for the current object
      */
-    protected $handle;
+    protected $fileHandle;
 
     /**
      * @var string $fileName
@@ -28,20 +30,43 @@ class File
     protected $fullPath;
 
     /**
-     * @param string|null $path
-     *      The full or relative path of the file to open
+     * @var 
+     *      Buffer size in bytes
      */
-    public function __construct($path = null)
+    protected $buffer;
+
+    /**
+     * Setting the `$path` as a resource will completely ignore the `$mode`.
+     *
+     * @param string|resource $path
+     *      The full or relative path of the file to open
+     * @param string $mode
+     *      Valid file mode to open the file resource with
+     */
+    public function __construct($path, $mode = 'w+')
     {
+        if (is_resource($path)) {
+            $this->fileHandle = $path;
+        } else {
+            $this->fileHandle = fopen($path, $mode);
+        }
+
+        if (!$this->fileHandle) {
+            throw new FileException('Unable to open or create the file.');
+        }
     }
 
-    public function open($path)
+    public function open($path, $mode = 'w+')
     {
-
+        $this->fileHandle = fopen($path, $mode);
     }
 
     public function save()
     {
+        if (!$this->fileName) {
+            throw new FileException('Cannot save a file without a file name.');
+        }
+
 
     }
 }
