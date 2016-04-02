@@ -3,7 +3,11 @@
 namespace Extended\File;
 
 use Extended\Exception\FileException;
+use Extended\File\File;
 
+/**
+ * Represents a temporary file in the file system.
+ */
 class Tmp extends File
 {
     public function __construct()

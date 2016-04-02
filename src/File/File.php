@@ -59,6 +59,9 @@ abstract class File extends Buffer
 
         $this->fileName = $this->parseFileName($path);
         $this->fullpath = $this->parseFullPath($path);
+
+        // read the contents of the file into the buffer
+        $this->read($this->fileHandle);
     }
 
     /**
@@ -98,7 +101,47 @@ abstract class File extends Buffer
             throw new FileException('Unable to save a file without a name.');
         }
 
+        if (!fwrite($this->fileHandle, $this->fileSize())) {
+            throw new FileException('Error writign the file to the filesystem');
+        }
 
         return $this;
+    }
+
+    /**
+     * Reads a file resource's contents into the buffer.
+     *
+     * @param resource|string $value
+     *      Resource to read from, or string to set as the buffer
+     * @param int|null $size
+     *      How far into the file to read. If null, the hole file
+     * @return \Extended\File\File
+     */
+    public function read($value, $size = null)
+    {
+        if (is_resource($value)) {
+            if (!$size) {
+                $size = $this->fileSize();
+            }
+
+            $this->buffer = fread($this->handle, $size);
+
+            if (!$this->buffer) {
+                throw new FileException('Unable to read the file resource');
+            }
+        } elseif (is_string($value)) {
+            $this->buffer = $value;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     *      The file size of the current file handle
+     */
+    public function fileSize()
+    {
+        return filesize($this->fileHandle);
     }
 }
