@@ -4,21 +4,15 @@ namespace Extended\File;
 
 use Extended\Exception\FileException;
 use Extended\File\Buffer;
-use Extended\File\ParsingTrait;
+use Extended\File\Parser;
 
 /**
  * Some times you want a more OOP way to deal with files in PHP. That's what
  * this is.
  */
 
-abstract class File extends Buffer
+class File extends Buffer
 {
-    /**
-     * `parseFileName()`
-     * `parseFullPath()`
-     */
-    use ParsingTrait;
-
     /**
      * @var resource $fileHandle
      *      The open file resource for the current object
@@ -59,8 +53,8 @@ abstract class File extends Buffer
             throw new FileException('Unable to open or create the file.');
         }
 
-        $this->fileName = $this->parseFileName($path);
-        $this->fullpath = $this->parseFullPath($path);
+        $this->fileName = Parser::parseFileName($path);
+        $this->fullpath = Parser::parseFullPath($path);
 
         // read the contents of the file into the buffer
         $this->read($this->fileHandle);
@@ -97,6 +91,8 @@ abstract class File extends Buffer
     }
 
     /**
+     * Writes the file to the file system.
+     *
      * @return \Extended\File\File
      */
     public function save()
@@ -152,7 +148,7 @@ abstract class File extends Buffer
      */
     public function fileSize()
     {
-        return filesize($this->fileHandle);
+        return filesize($this->fullPath . $this->fileName);
     }
 
     /**

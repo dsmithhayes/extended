@@ -1,5 +1,7 @@
 <?php
 
+use Extended\File\File;
+
 class FileTestCase extends PHPUnit_Framework_TestCase
 {
     protected static $path;
@@ -12,5 +14,7 @@ class FileTestCase extends PHPUnit_Framework_TestCase
     public function testOpenFile()
     {
         self::setupTestFile();
+
+        $file = new File($this->path);
     }
 }
