@@ -2,8 +2,9 @@
 
 namespace Extended\File;
 
-use Extended\FileException;
+use Extended\Exception\FileException;
 use Extended\File\Buffer;
+use Extended\File\ParsingTrait;
 
 /**
  * Some times you want a more OOP way to deal with files in PHP. That's what
@@ -12,6 +13,12 @@ use Extended\File\Buffer;
 
 abstract class File extends Buffer
 {
+    /**
+     * `parseFileName()`
+     * `parseFullPath()`
+     */
+    use ParsingTrait;
+
     /**
      * @var resource $fileHandle
      *      The open file resource for the current object
@@ -50,11 +57,16 @@ abstract class File extends Buffer
             throw new FileException('Unable to open or create the file.');
         }
 
-        $path = explode('/', $path);
-        $n = count($path) - 1;
-        $this->fileName = $path[$n];
-        unset($path[$n]);
-        $this->fullPath = implode('/', $path);
+        $this->fileName = $this->parseFileName($path);
+        $this->fullpath = $this->parseFullPath($path);
+    }
+
+    /**
+     * Closes the internal file resource.
+     */
+    public function __destruct()
+    {
+        fclose($this->fileHandle);
     }
 
     /**
@@ -64,6 +76,7 @@ abstract class File extends Buffer
      *      The path to the file in the file system
      * @param $mode string
      *      The mode to open the file with. Defaults to `w+`
+     * @return \Extended\File\File
      */
     public function open($path, $mode = 'w+')
     {
@@ -72,8 +85,13 @@ abstract class File extends Buffer
         if (!$this->fileHandle) {
             throw new FileException('Unable to open file: ' . $path);
         }
+
+        return $this;
     }
 
+    /**
+     * @return \Extended\File\File
+     */
     public function save()
     {
         if (!$this->fileName) {
@@ -81,18 +99,6 @@ abstract class File extends Buffer
         }
 
 
-    }
-
-    /**
-     * @param string $path
-     *      The full path of the file, with its file name
-     * @return string
-     *      The file name of the path given
-     */
-    private function getFileName($path)
-    {
-        $splitPath =  explode('/', $path);
-
-        return $splitPath[strlen($path) - 1];
+        return $this;
     }
 }
