@@ -49,8 +49,22 @@ abstract class File extends Buffer
         if (!$this->fileHandle) {
             throw new FileException('Unable to open or create the file.');
         }
+
+        $path = explode('/', $path);
+        $n = count($path) - 1;
+        $this->fileName = $path[$n];
+        unset($path[$n]);
+        $this->fullPath = implode('/', $path);
     }
 
+    /**
+     * Opens a file resource.
+     *
+     * @param $path string
+     *      The path to the file in the file system
+     * @param $mode string
+     *      The mode to open the file with. Defaults to `w+`
+     */
     public function open($path, $mode = 'w+')
     {
         $this->fileHandle = fopen($path, $mode);
