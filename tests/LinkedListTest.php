@@ -15,7 +15,7 @@ class LinkedListTest extends PHPUnit_Framework_TestCase
         $list->add($this->first);
 
         for ($list->rewind(); $list->valid(); $list->next()) {
-            $this->assertTrue($list->first());
+            $this->assertTrue($list->isFirst());
             break;
         }
 
@@ -31,7 +31,7 @@ class LinkedListTest extends PHPUnit_Framework_TestCase
 
         for ($list->rewind(); $list->valid(); $list->next()) {
             if ($list->current() === $this->last) {
-                $this->assertTrue($list->last());
+                $this->assertTrue($list->isLast());
                 break;
             }
         }
@@ -45,7 +45,7 @@ class LinkedListTest extends PHPUnit_Framework_TestCase
     public function testLastMethodFalse($list)
     {
         for ($list->rewind(); $list->valid(); $list->next()) {
-            $this->assertFalse($list->last());
+            $this->assertFalse($list->isLast());
             break;
         }
 
@@ -58,7 +58,7 @@ class LinkedListTest extends PHPUnit_Framework_TestCase
     public function testForeachTrue($list)
     {
         foreach ($list as $l) {
-            if ($list->first()) {
+            if ($list->isFirst()) {
                 $this->assertEquals($this->first, $list->current());
             }
         }
@@ -72,7 +72,7 @@ class LinkedListTest extends PHPUnit_Framework_TestCase
     public function testForeachFalse($list)
     {
         foreach ($list as $l) {
-            $this->assertFalse($list->last());
+            $this->assertFalse($list->isLast());
             break;
         }
 
@@ -102,7 +102,7 @@ class LinkedListTest extends PHPUnit_Framework_TestCase
         $list = new LinkedList($this->exampleSet);
 
         foreach ($list as $l) {
-            if ($list->first()) {
+            if ($list->isFirst()) {
                 $this->assertEquals($this->first, $l);
                 break;
             }

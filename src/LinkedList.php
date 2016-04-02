@@ -90,7 +90,7 @@ class LinkedList implements ControlIterator, AccessIterator
      * @return bool
      *      True if the key is set to the first record
      */
-    public function first()
+    public function isFirst()
     {
         return ($this->key === 0) ? true : false;
     }
@@ -98,7 +98,7 @@ class LinkedList implements ControlIterator, AccessIterator
     /**
      * @return bool
      */
-    public function last()
+    public function isLast()
     {
         return ($this->key === (count($this->list) - 1)) ? true : false;
     }
