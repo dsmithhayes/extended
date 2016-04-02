@@ -10,17 +10,24 @@ use Extended\File\File;
  */
 class Tmp extends File
 {
-    public function __construct()
+    public function __construct($buffer = null)
     {
         $this->fileHandle = tmpfile();
-        $this->filePath = sys_get_temp_dir();
+        $this->fullPath = sys_get_temp_dir();
+
+        if ($buffer) {
+            $this->buffer = $buffer;
+        }
     }
 
     /**
-     * @param $fileName string
+     * @param string $fileName
      *      The name of the file to save
-     * @param $fullPath string
+     * @param string $fullPath
      *      The full path of where to save the file
+     * @return \Extended\File\Tmp;
+     * @throws \Extended\Exception\FileException
+     *      If the file could not be saved
      */
     public function save($fileName, $fullPath = null)
     {
@@ -31,5 +38,6 @@ class Tmp extends File
         }
 
         parent::save();
+        return $this;
     }
 }

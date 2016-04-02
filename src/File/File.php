@@ -137,6 +137,10 @@ abstract class File extends Buffer
             }
         } elseif (is_string($value)) {
             $this->buffer = $value;
+        } else {
+            throw new FileException(
+                'Failed to read the value into the buffer.'
+            );
         }
 
         return $this;
@@ -158,6 +162,13 @@ abstract class File extends Buffer
      */
     public function setFileHandle($handle)
     {
+        if (is_resource($handle)) {
+            $this->handle = $handle;
+            return $this;
+        }
 
+        throw new FileException(
+            'Trying to set a file handle with non resource.'
+        );
     }
 }
