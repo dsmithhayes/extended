@@ -44,6 +44,8 @@ abstract class File extends Buffer
      *      The full or relative path of the file to open
      * @param string $mode
      *      Valid file mode to open the file resource with
+     * @throws \Extended\Exception\FileException
+     *      When the file is could not be opened or created
      */
     public function __construct($path, $mode = 'w+')
     {
@@ -80,6 +82,8 @@ abstract class File extends Buffer
      * @param $mode string
      *      The mode to open the file with. Defaults to `w+`
      * @return \Extended\File\File
+     * @throws \Extended\Exception\FileException
+     *      When the file is unable to be opened
      */
     public function open($path, $mode = 'w+')
     {
@@ -116,6 +120,8 @@ abstract class File extends Buffer
      * @param int|null $size
      *      How far into the file to read. If null, the hole file
      * @return \Extended\File\File
+     * @throws \Extended\Exception\FileException
+     *      If the file resource could not be read
      */
     public function read($value, $size = null)
     {
@@ -124,7 +130,7 @@ abstract class File extends Buffer
                 $size = $this->fileSize();
             }
 
-            $this->buffer = fread($this->handle, $size);
+            $this->buffer = fread($value, $size);
 
             if (!$this->buffer) {
                 throw new FileException('Unable to read the file resource');
@@ -143,5 +149,15 @@ abstract class File extends Buffer
     public function fileSize()
     {
         return filesize($this->fileHandle);
+    }
+
+    /**
+     * @param resource $handle
+     *      A file handle to set for the object
+     * @return \Extended\File\File
+     */
+    public function setFileHandle($handle)
+    {
+
     }
 }

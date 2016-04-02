@@ -17,9 +17,7 @@ trait ParsingTrait
      */
     public function parseFileName($path)
     {
-        $path = explode('/', $path);
-        $n = count($path) - 1;
-        return $path[$n];
+        return basename($path);
     }
 
     /**
@@ -32,9 +30,6 @@ trait ParsingTrait
      */
     public function parseFilePath($path)
     {
-        $path = explode('/', $path);
-        $n = count($path) - 1;
-        unset($path[$n]);
-        return implode('/', $path);
+        return dirname($path);
     }
 }
