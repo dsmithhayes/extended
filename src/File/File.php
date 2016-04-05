@@ -5,59 +5,66 @@ namespace Extended\File;
 use Extended\Exception\FileException;
 use Extended\File\Buffer;
 use Extended\File\Parser;
+use Serializable;
 
 /**
  * Some times you want a more OOP way to deal with files in PHP. That's what
- * this is.
+ * this is. This object will actually open and maintain an open file resource
+ * while it is instantiated.
  */
 
-class File extends Buffer
+class File extends Buffer implements Serializable
 {
     /**
-     * @var resource $fileHandle
+     * @var resource
      *      The open file resource for the current object
      */
-    protected $fileHandle;
+    protected $handle;
 
     /**
-     * @var string $fileName
+     * @var string
      *      The name of the current file
      */
-    protected $fileName;
+    protected $name;
 
     /**
-     * @var string $fullPath
+     * @var string
      *      The full path in the filesystem for the current file
      */
-    protected $fullPath;
+    protected $path;
 
     /**
-     * Setting the `$path` as a resource will completely ignore the `$mode`.
-     *
-     * @param string|resource $path
-     *      The full or relative path of the file to open
+     * @param string $path
+     *      The path to the file
      * @param string $mode
-     *      Valid file mode to open the file resource with
+     *      The mode to open the file with
+     * @param string|null $buffer
+     *      If set, the new buffer for the file, otherwise the contents of the
+     *      are read into the buffer
      * @throws \Extended\Exception\FileException
-     *      When the file is could not be opened or created
+     *      When the file cannot be opened or created
+     * @throws \Extended\Exception\FileException
+     *      When the file resource can't be read into the buffer
      */
-    public function __construct($path, $mode = 'w+')
+    public function __construct($path, $mode = 'w+', $buffer = null)
     {
-        if (is_resource($path)) {
-            $this->fileHandle = $path;
-        } else {
-            $this->fileHandle = fopen($path, $mode);
-        }
+        $this->handle = fopen($path, $mode);
+        $this->name = basename($path);
+        $this->path = dirname($path);
 
-        if (!$this->fileHandle) {
+        if (!$this->handle) {
             throw new FileException('Unable to open or create the file.');
         }
 
-        $this->fileName = Parser::parseFileName($path);
-        $this->fullpath = Parser::parseFullPath($path);
+        if ($buffer) {
+            $this->buffer = $buffer;
+        } else {
+            $this->buffer = fread($this->handle, $this->filesize());
 
-        // read the contents of the file into the buffer
-        $this->read($this->fileHandle);
+            if (!$this->buffer) {
+                throw new FileException('Unable to read file into buffer.');
+            }
+        }
     }
 
     /**
@@ -65,11 +72,11 @@ class File extends Buffer
      */
     public function __destruct()
     {
-        fclose($this->fileHandle);
+        fclose($this->handle);
     }
 
     /**
-     * Opens a file resource.
+     * Opens a new file resource.
      *
      * @param $path string
      *      The path to the file in the file system
@@ -81,9 +88,13 @@ class File extends Buffer
      */
     public function open($path, $mode = 'w+')
     {
-        $this->fileHandle = fopen($path, $mode);
+        fclose($this->handle);
+        $this->handle = fopen($path, $mode);
 
-        if (!$this->fileHandle) {
+        $this->name = basename($name);
+        $this->path = dirname($name);
+
+        if (!$this->handle) {
             throw new FileException('Unable to open file: ' . $path);
         }
 
@@ -97,48 +108,28 @@ class File extends Buffer
      */
     public function save()
     {
-        if (!$this->fileName) {
+        if (!$this->name) {
             throw new FileException('Unable to save a file without a name.');
         }
 
-        if (!fwrite($this->fileHandle, $this->fileSize())) {
-            throw new FileException('Error writign the file to the filesystem');
+        // the write happens here
+        if (!fwrite($this->handle, $this->filesize())) {
+            throw new FileException('Error writing the file to the filesystem');
         }
 
         return $this;
     }
 
     /**
-     * Reads a file resource's contents into the buffer.
+     * Arbitrarily sets the buffer. It uses the `strval()` method.
      *
-     * @param resource|string $value
-     *      Resource to read from, or string to set as the buffer
-     * @param int|null $size
-     *      How far into the file to read. If null, the hole file
+     * @param string $value
+     *      The data to hold in the buffer
      * @return \Extended\File\File
-     * @throws \Extended\Exception\FileException
-     *      If the file resource could not be read
      */
-    public function read($value, $size = null)
+    public function read($value)
     {
-        if (is_resource($value)) {
-            if (!$size) {
-                $size = $this->fileSize();
-            }
-
-            $this->buffer = fread($value, $size);
-
-            if (!$this->buffer) {
-                throw new FileException('Unable to read the file resource');
-            }
-        } elseif (is_string($value)) {
-            $this->buffer = $value;
-        } else {
-            throw new FileException(
-                'Failed to read the value into the buffer.'
-            );
-        }
-
+        $this->buffer = strval($value);
         return $this;
     }
 
@@ -146,9 +137,9 @@ class File extends Buffer
      * @return int
      *      The file size of the current file handle
      */
-    public function fileSize()
+    public function filesize()
     {
-        return filesize($this->fullPath . $this->fileName);
+        return filesize($this->path . $this->name);
     }
 
     /**
@@ -156,15 +147,85 @@ class File extends Buffer
      *      A file handle to set for the object
      * @return \Extended\File\File
      */
-    public function setFileHandle($handle)
+    public function setHandle($handle)
     {
-        if (is_resource($handle)) {
-            $this->handle = $handle;
-            return $this;
+        if (!is_resource($handle)) {
+            throw new FileException(
+                'Trying to set a file handle with non resource.'
+            );
         }
 
-        throw new FileException(
-            'Trying to set a file handle with non resource.'
-        );
+        fclose($this->handle);
+        $this->handle = $handle;
+        return $this;
+    }
+
+    /**
+     * @return resource
+     *      The active file handle
+     */
+    public function getHandle()
+    {
+        return $this->handle;
+    }
+
+    /**
+     * @param string $name
+     *      The name to set for the file
+     * @return \Extended\File\File
+     */
+    public function setName($name)
+    {
+        $this->name = strval($name);
+        return $this;
+    }
+
+    /**
+     * @return string
+     *      The current name of the file
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $path
+     *      The new path to save the file in
+     */
+    public function setPath($path)
+    {
+        if (!is_dir($path)) {
+            throw new FileException('Not a valid directory path.');
+        }
+
+        return $path;
+    }
+
+    /**
+     * @return string
+     *      The path of the file
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * The method called before the object is serialized.
+     *
+     * @param string
+     *      The full path of the file
+     */
+    public function serialize()
+    {
+        fclose($this->handle);
+        $path = $this->path . $this->name;
+        return serialize(['path' => $path]);
+    }
+
+    public function unserialize($serialized)
+    {
+
     }
 }
