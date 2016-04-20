@@ -1,4 +1,4 @@
-# Exnteded
+# Extended
 
 Classes and interfaces that expand some concepts from the SPL that I find I
 use across many projects. Basic data structures and their usages are implemented
