@@ -55,12 +55,10 @@ class AdvancedStack extends BasicStack implements \Iterator
     public function valid()
     {
         if ($this->pointer < 0) {
-            $valid = false;
             $this->pointer = 0;
-        } else {
-            $valid = true;
+            return false;
         }
 
-        return $valid;
+        return $true;
     }
 }

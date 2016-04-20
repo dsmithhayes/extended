@@ -1,10 +1,13 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes
+ */
+
 namespace Extended\File;
 
 use Extended\Exception\FileException;
 use Extended\File\Buffer;
-use Extended\File\Parser;
 use Serializable;
 
 /**
@@ -72,7 +75,7 @@ class File extends Buffer implements Serializable
      */
     public function __destruct()
     {
-        fclose($this->handle);
+       fclose($this->handle);
     }
 
     /**
@@ -151,12 +154,14 @@ class File extends Buffer implements Serializable
     {
         if (!is_resource($handle)) {
             throw new FileException(
-                'Trying to set a file handle with non resource.'
+                'Trying to set a file resource with non resource.',
+                FileException::INVALID_SET_TYPE
             );
         }
 
         fclose($this->handle);
         $this->handle = $handle;
+
         return $this;
     }
 
@@ -170,36 +175,12 @@ class File extends Buffer implements Serializable
     }
 
     /**
-     * @param string $name
-     *      The name to set for the file
-     * @return \Extended\File\File
-     */
-    public function setName($name)
-    {
-        $this->name = strval($name);
-        return $this;
-    }
-
-    /**
      * @return string
      *      The current name of the file
      */
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @param string $path
-     *      The new path to save the file in
-     */
-    public function setPath($path)
-    {
-        if (!is_dir($path)) {
-            throw new FileException('Not a valid directory path.');
-        }
-
-        return $path;
     }
 
     /**
