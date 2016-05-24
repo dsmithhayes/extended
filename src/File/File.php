@@ -138,16 +138,19 @@ class File extends Buffer implements Serializable
     }
 
     /**
-     * Arbitrarily sets the buffer. It uses the `strval()` method.
+     * Reads the buffer, or the handle contents out.
      *
-     * @param string $value
-     *      The data to hold in the buffer
+     * @param bool $fromBuffer
+     *      If true, read from the buffer instead of the file handle
      * @return \Extended\File\File
      */
-    public function read($value)
+    public function read($fromBuffer = true)
     {
-        $this->buffer = strval($value);
-        return $this;
+        if ($fromBuffer) {
+            return $this->writeBuffer();
+        }
+
+        return fread($this->handle, $this->filesize());
     }
 
     /**

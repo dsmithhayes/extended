@@ -31,17 +31,22 @@ abstract class Buffer
     /**
      * @param mixed $value
      *      The value to read into the buffer
+     * @return \Extended\File\Buffer
      */
     public function readBuffer($value)
     {
         $this->buffer = $value;
+        return $this;
     }
 
     /**
      * Clears the entire buffer.
+     *
+     * @return \Extended\File\Buffer
      */
     public function clearBuffer()
     {
         $this->buffer = '';
+        return $this;
     }
 }
