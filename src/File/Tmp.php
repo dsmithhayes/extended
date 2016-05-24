@@ -10,6 +10,10 @@ use Extended\File\File;
  */
 class Tmp extends File
 {
+    /**
+     * @param string|null $buffer
+     *      The buffer to write into the temporary file
+     */
     public function __construct($buffer = null)
     {
         $this->handle = tmpfile();

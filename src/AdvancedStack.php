@@ -59,6 +59,6 @@ class AdvancedStack extends BasicStack implements \Iterator
             return false;
         }
 
-        return $true;
+        return true;
     }
 }

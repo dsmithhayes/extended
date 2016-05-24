@@ -52,8 +52,8 @@ class File extends Buffer implements Serializable
     public function __construct($path, $mode = 'w+', $buffer = null)
     {
         $this->handle = fopen($path, $mode);
-        $this->name = basename($path);
-        $this->path = dirname($path);
+        $this->name   = basename($path);
+        $this->path   = dirname($path);
 
         if (!$this->handle) {
             throw new FileException('Unable to open or create the file.');
@@ -62,10 +62,14 @@ class File extends Buffer implements Serializable
         if ($buffer) {
             $this->buffer = $buffer;
         } else {
-            $this->buffer = fread($this->handle, $this->filesize());
+            if ($this->filesize() > 0) {
+                $this->buffer = fread($this->handle, $this->filesize());
 
-            if (!$this->buffer) {
-                throw new FileException('Unable to read file into buffer.');
+                if (!$this->buffer) {
+                    throw new FileException('Unable to read file into buffer.');
+                }
+            } else {
+                $this->buffer = '';
             }
         }
     }
@@ -116,8 +120,8 @@ class File extends Buffer implements Serializable
         }
 
         // the write happens here
-        if (!fwrite($this->handle, $this->filesize())) {
-            throw new FileException('Error writing the file to the filesystem');
+        if (!fwrite($this->handle, $this->buffer)) {
+            throw new FileException('Error writing the file to the filesystem.');
         }
 
         return $this;
@@ -142,7 +146,7 @@ class File extends Buffer implements Serializable
      */
     public function filesize()
     {
-        return filesize($this->path . $this->name);
+        return filesize($this->path . '/' . $this->name);
     }
 
     /**

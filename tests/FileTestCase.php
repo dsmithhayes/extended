@@ -8,13 +8,15 @@ class FileTestCase extends PHPUnit_Framework_TestCase
 
     public function setupTestFile()
     {
-        $this->path = dirname(__FILE__) . '/assets/test_file.txt';
+        static::$path = dirname(__FILE__) . '/assets/test_file.txt';
     }
 
     public function testOpenFile()
     {
-        self::setupTestFile();
+        static::setupTestFile();
 
-        $file = new File($this->path);
+        if (file_exists(static::$path)) {
+            $file = new File(static::$path);
+        }
     }
 }
