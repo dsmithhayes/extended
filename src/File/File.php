@@ -37,6 +37,12 @@ class File extends Buffer implements Serializable
     protected $path;
 
     /**
+     * @var string
+     *      The mode to use `fopen()` with
+     */
+    protected $mode;
+
+    /**
      * @param string $path
      *      The path to the file
      * @param string $mode
@@ -54,6 +60,7 @@ class File extends Buffer implements Serializable
         $this->handle = fopen($path, $mode);
         $this->name   = basename($path);
         $this->path   = dirname($path);
+        $this->mode   = $mode;
 
         if (!$this->handle) {
             throw new FileException('Unable to open or create the file.');
@@ -83,7 +90,7 @@ class File extends Buffer implements Serializable
     }
 
     /**
-     * Opens a new file resource.
+     * Opens a new file resource, it does not clear the buffer.
      *
      * @param $path string
      *      The path to the file in the file system
@@ -95,7 +102,10 @@ class File extends Buffer implements Serializable
      */
     public function open($path, $mode = 'w+')
     {
-        fclose($this->handle);
+        if ($this->handle) {
+            fclose($this->handle);
+        }
+
         $this->handle = fopen($path, $mode);
 
         $this->name = basename($name);
@@ -179,12 +189,34 @@ class File extends Buffer implements Serializable
     }
 
     /**
+     * @param string $name
+     *      The name to set for the file
+     * @return Extended\File\File
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
      * @return string
      *      The current name of the file
      */
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param string $path
+     *      The path to set for the file
+     * @return \Extended\File\File
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+        return $this;
     }
 
     /**
@@ -197,6 +229,26 @@ class File extends Buffer implements Serializable
     }
 
     /**
+     * @param string $mode
+     *      The mode to set for the file
+     * @return \Extended\File\File
+     */
+    public function setMode($mode)
+    {
+        $this->mode = $mode;
+        return $this;
+    }
+
+    /**
+     * @return string
+     *      The mode of the file opened
+     */
+    public function getMode()
+    {
+        return $this->mode;
+    }
+
+    /**
      * The method called before the object is serialized.
      *
      * @param string
@@ -206,11 +258,18 @@ class File extends Buffer implements Serializable
     {
         fclose($this->handle);
         $path = $this->path . $this->name;
-        return serialize(['path' => $path]);
+        return serialize([
+            'path' => $path,
+            'mode' => $this->mode
+        ]);
     }
 
+    /**
+     * @param array
+     *      The decoded serialized array to reopen the file resource
+     */
     public function unserialize($serialized)
     {
-
+        $this->open($serialized['path'], $serialized['mode']);
     }
 }

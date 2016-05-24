@@ -23,7 +23,7 @@ abstract class Buffer
      * @return mixed
      *      Output whatever is in the buffer
      */
-    public function write()
+    public function writeBuffer()
     {
         return $this->buffer;
     }
@@ -32,8 +32,16 @@ abstract class Buffer
      * @param mixed $value
      *      The value to read into the buffer
      */
-    public function read($value)
+    public function readBuffer($value)
     {
         $this->buffer = $value;
+    }
+
+    /**
+     * Clears the entire buffer.
+     */
+    public function clearBuffer()
+    {
+        $this->buffer = '';
     }
 }

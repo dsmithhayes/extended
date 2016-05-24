@@ -14,9 +14,13 @@ class FileTestCase extends PHPUnit_Framework_TestCase
     public function testOpenFile()
     {
         static::setupTestFile();
+        $file = new File(static::$path);
 
-        if (file_exists(static::$path)) {
-            $file = new File(static::$path);
-        }
+        $expected = 'test';
+        $file->read($expected);
+
+        $fileOutput = trim($file->writeBuffer());
+
+        $this->assertEquals($expected, $fileOutput);
     }
 }
