@@ -13,7 +13,8 @@
     "authors": [
         {
             "name": "Dave Smith-Hayes",
-            "email": "dsmithhayes@propellerideas.com"
+            "email": "dsmithhayes@propellerideas.com",
+            "website": "https://davesmithhayes.com",
         }
     ],
     "autoload": {
