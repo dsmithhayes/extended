@@ -131,7 +131,9 @@ class File extends Buffer implements Serializable
 
         // the write happens here
         if (!fwrite($this->handle, $this->buffer)) {
-            throw new FileException('Error writing the file to the filesystem.');
+            throw new FileException(
+                'Error writing the file to the filesystem.'
+            );
         }
 
         return $this;
@@ -252,7 +254,9 @@ class File extends Buffer implements Serializable
     }
 
     /**
-     * The method called before the object is serialized.
+     * The method called before the object is serialized. It saves the full path
+     * along with the file mode to re-open the file when the object is
+     * unserialized.
      *
      * @param string
      *      The full path of the file
@@ -269,10 +273,17 @@ class File extends Buffer implements Serializable
 
     /**
      * @param array
-     *      The decoded serialized array to reopen the file resource
+     *      The serialized object
      */
     public function unserialize($serialized)
     {
-        $this->open($serialized['path'], $serialized['mode']);
+        try {
+            $seriazlied = unserialize($serialized);
+            $this->open($serialized['path'], $serialized['mode']);
+        } catch (FileException $fe) {
+            throw new FileException(
+                'Unable to unserialize the file: ' . $serialized['path']
+            );
+        }
     }
 }
