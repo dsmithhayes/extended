@@ -16,17 +16,15 @@ use Extended\File\File;
 class Tmp extends File
 {
     /**
-     * @param string|null $buffer
+     * @param string $buffer
      *      The buffer to write into the temporary file
      */
-    public function __construct($buffer = null)
+    public function __construct(string $buffer = '')
     {
         $this->handle = tmpfile();
-        $this->path = sys_get_temp_dir();
+        $this->path   = sys_get_temp_dir();
 
-        if ($buffer) {
-            $this->buffer = $buffer;
-        }
+        $this->setBuffer($buffer);
     }
 
     /**
@@ -38,12 +36,12 @@ class Tmp extends File
      * @throws \Extended\Exception\FileException
      *      If the file could not be saved
      */
-    public function save($name, $path = null)
+    public function save(string $name, string $path = null)
     {
-        $this->name = $name;
+        $this->setName($name);
 
         if ($path) {
-            $this->path = $path;
+            $this->setPath($path);
         }
 
         parent::save();

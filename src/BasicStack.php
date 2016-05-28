@@ -16,26 +16,30 @@ use Extended\Exception\StackException;
 class BasicStack implements Stack
 {
     /**
-     * @var array The stack
+     * @var array
+     *      The stack
      */
     protected $stack;
 
     /**
-     * @var int The stack pointer
+     * @var int
+     *      The stack pointer
      */
     protected $pointer;
 
     /**
-     * @param array $stack A stack to use within the object
+     * @param array $stack
+     *      A stack to use within the object
      */
-    public function __construct($stack = [])
+    public function __construct(array $stack = [])
     {
         $this->stack = array_values($stack);
         $this->pointer = (count($this->stack) - 1);
     }
 
     /**
-     * @return mixed The value at the top of the stack
+     * @return mixed
+     *      The value at the top of the stack
      */
     public function pop()
     {
@@ -50,7 +54,8 @@ class BasicStack implements Stack
     }
 
     /**
-     * @param mixed $value The item to add to the stack
+     * @param mixed $value
+     *      The item to add to the stack
      */
     public function push($value)
     {
@@ -60,10 +65,12 @@ class BasicStack implements Stack
     /**
      * Assures the stack pointer can't be set to an invalid range
      *
-     * @param  int $value A stack pointer to set
-     * @return int        A valid stack pointer
+     * @param int $value
+     *      A stack pointer to set
+     * @return int
+     *      A valid stack pointer
      */
-    protected function pointerCeiling($value)
+    protected function pointerCeiling(int $value): int
     {
         $cieling = count($this->stack) - 1;
         return ($value > $cieling) ? $cieling : $value;
@@ -72,10 +79,12 @@ class BasicStack implements Stack
     /**
      * Assures the stack pointer can't be set to an invalid range
      *
-     * @param  int $value A stack pointer to set
-     * @return int        A valid stack pointer
+     * @param int $value
+     *      $value A stack pointer to set
+     * @return int
+     *      A valid stack pointer
      */
-    protected function pointerFloor($value)
+    protected function pointerFloor(int $value): int
     {
         return ($value < 0) ? 0 : $value;
     }

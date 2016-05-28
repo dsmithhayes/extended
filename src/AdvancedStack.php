@@ -31,7 +31,7 @@ class AdvancedStack extends BasicStack implements \Iterator
     /**
      * @return int The current position of the stack pointer
      */
-    public function key()
+    public function key(): int
     {
         return $this->pointer;
     }
@@ -57,7 +57,7 @@ class AdvancedStack extends BasicStack implements \Iterator
      *
      * @return bool True if the item exists in the stack
      */
-    public function valid()
+    public function valid(): bool
     {
         if ($this->pointer < 0) {
             $this->pointer = 0;

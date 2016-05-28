@@ -31,7 +31,7 @@ class LinkedList implements ControlIterator, AccessIterator
      * @param array $list
      *      An array of items for the list
      */
-    public function __construct($list = [])
+    public function __construct(array $list = [])
     {
         if (!empty($list)) {
             foreach ($list as $l) {
@@ -73,7 +73,7 @@ class LinkedList implements ControlIterator, AccessIterator
      * @return bool
      *      True if the current position is a valid list item
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->list[$this->key]);
     }
@@ -82,7 +82,7 @@ class LinkedList implements ControlIterator, AccessIterator
      * @return int
      *      The current position in the list
      */
-    public function key()
+    public function key(): int
     {
         return $this->key;
     }
@@ -95,7 +95,7 @@ class LinkedList implements ControlIterator, AccessIterator
      * @return bool
      *      True if the key is set to the first record
      */
-    public function isFirst()
+    public function isFirst(): bool
     {
         return ($this->key === 0) ? true : false;
     }
@@ -103,7 +103,7 @@ class LinkedList implements ControlIterator, AccessIterator
     /**
      * @return bool
      */
-    public function isLast()
+    public function isLast(): bool
     {
         return ($this->key === (count($this->list) - 1)) ? true : false;
     }
@@ -127,7 +127,7 @@ class LinkedList implements ControlIterator, AccessIterator
     }
 
     /**
-     * @param  int
+     * @param int $key
      * @return mixed
      */
     public function get($key)
@@ -136,8 +136,10 @@ class LinkedList implements ControlIterator, AccessIterator
     }
 
     /**
-     * @param int   The position in the list
-     * @param mixed The item to set
+     * @param int $key
+     *      The position in the list
+     * @param mixed $value
+     *      The item to set
      */
     public function set($key, $value)
     {
@@ -145,7 +147,8 @@ class LinkedList implements ControlIterator, AccessIterator
     }
 
     /**
-     * @param mixed An item to add to the list
+     * @param mixed $value
+     *      An item to add to the list
      */
     public function add($value)
     {

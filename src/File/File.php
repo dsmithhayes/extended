@@ -35,7 +35,7 @@ class File extends Buffer implements Serializable
      * @var string
      *      The full path in the filesystem for the current file
      */
-    protected $path;
+     protected $path;
 
     /**
      * @var string
@@ -56,7 +56,9 @@ class File extends Buffer implements Serializable
      * @throws \Extended\Exception\FileException
      *      When the file resource can't be read into the buffer
      */
-    public function __construct($path, $mode = 'w+', $buffer = null)
+    public function __construct(string $path,
+                                string $mode = 'w+',
+                                string $buffer = null)
     {
         $this->handle = fopen($path, $mode);
         $this->name   = basename($path);
@@ -101,7 +103,7 @@ class File extends Buffer implements Serializable
      * @throws \Extended\Exception\FileException
      *      When the file is unable to be opened
      */
-    public function open($path, $mode = 'w+')
+    public function open(string $path, string $mode = 'w+')
     {
         if ($this->handle) {
             fclose($this->handle);
@@ -147,7 +149,7 @@ class File extends Buffer implements Serializable
      *      If true, read from the buffer instead of the file handle
      * @return \Extended\File\File
      */
-    public function read($fromBuffer = true)
+    public function read(bool $fromBuffer = true)
     {
         if ($fromBuffer) {
             return $this->writeBuffer();
@@ -160,7 +162,7 @@ class File extends Buffer implements Serializable
      * @return int
      *      The file size of the current file handle
      */
-    public function filesize()
+    public function filesize(): int
     {
         return filesize($this->path . '/' . $this->name);
     }
@@ -170,11 +172,11 @@ class File extends Buffer implements Serializable
      *      A file handle to set for the object
      * @return \Extended\File\File
      */
-    public function setHandle($handle)
+    public function setHandle(resource $handle)
     {
         if (!is_resource($handle)) {
             throw new FileException(
-                'Trying to set a file resource with non resource.',
+                'Trying to set a file resource with non-resource.',
                 FileException::INVALID_SET_TYPE
             );
         }
@@ -209,7 +211,7 @@ class File extends Buffer implements Serializable
      * @return string
      *      The current name of the file
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -229,7 +231,7 @@ class File extends Buffer implements Serializable
      * @return string
      *      The path of the file
      */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -249,7 +251,7 @@ class File extends Buffer implements Serializable
      * @return string
      *      The mode of the file opened
      */
-    public function getMode()
+    public function getMode(): string
     {
         return $this->mode;
     }
@@ -259,32 +261,38 @@ class File extends Buffer implements Serializable
      * along with the file mode to re-open the file when the object is
      * unserialized.
      *
-     * @param string
-     *      The full path of the file
+     * @return string
+     *      Serialized representation of the path and mode for the current file
+     *      opened within the object, along with any buffer that is set
      */
-    public function serialize()
+    public function serialize(): string
     {
         fclose($this->handle);
         $path = $this->path . $this->name;
         return serialize([
             'path' => $path,
-            'mode' => $this->mode
+            'mode' => $this->mode,
+            'buffer' => $this->getBuffer()
         ]);
     }
 
     /**
-     * @param array
+     * @param string $serialized
      *      The serialized object
+     * @throws \Extended\Exception\FileException
+     *      When the file information that has been serialized is invalid
      */
     public function unserialize($serialized)
     {
         try {
             $seriazlied = unserialize($serialized);
+            $this->setBuffer($serialized['buffer']);
             $this->open($serialized['path'], $serialized['mode']);
         } catch (FileException $fe) {
-            throw new FileException(
-                'Unable to unserialize the file: ' . $serialized['path']
-            );
+            $message  = 'Unable to unserialize and open the file: ';
+            $message .= $serialized['path'];
+
+            throw new FileException($message);
         }
     }
 }

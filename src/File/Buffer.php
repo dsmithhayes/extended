@@ -28,7 +28,7 @@ abstract class Buffer
      * @return mixed
      *      Output whatever is in the buffer
      */
-    public function writeBuffer()
+    public function getBuffer()
     {
         return $this->buffer;
     }
@@ -38,7 +38,7 @@ abstract class Buffer
      *      The value to read into the buffer
      * @return \Extended\File\Buffer
      */
-    public function readBuffer($value)
+    public function setBuffer($value)
     {
         $this->buffer = $value;
         return $this;

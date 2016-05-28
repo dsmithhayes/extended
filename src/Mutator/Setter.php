@@ -8,9 +8,14 @@
 namespace Extended\Mutator;
 
 /**
- * Another moderately useless interface, but what the hey!
+ * Another moderately useless interface, but what the hey! Also useless if you
+ * know how to use the `__set()` method.
  */
 interface Setter
 {
+    /**
+     * @param mixed $key
+     * @param mixed $value
+     */
     public function set($key, $value);
 }

@@ -18,6 +18,9 @@ interface Stack
      * Popping should remove the item from the stack entirely, but it really
      * doesn't have to if you don't want it to. Ideally its just going to
      * return whatever the stack pointer is pointing out.
+     *
+     * @return mixed
+     *      The item at the top of the stack
      */
     public function pop();
 
@@ -25,6 +28,9 @@ interface Stack
      * Pushing data into the stack is very simple. Ideally it will always be
      * pushed onto the top of the stack, but really it just works by inserting
      * data one block ahead of the stack pointer.
+     *
+     * @param mixed $value
+     *      The value to push onto the stack
      */
     public function push($value);
 }

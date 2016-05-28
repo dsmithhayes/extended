@@ -17,11 +17,11 @@ interface ControlIterator extends \Iterator
      * @return bool
      *      True if on the first iteration
      */
-    public function isFirst();
+    public function isFirst(): bool;
 
     /**
      * @return bool
      *      True if on the last iteration
      */
-    public function isLast();
+    public function isLast(): bool;
 }

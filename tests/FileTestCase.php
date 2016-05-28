@@ -17,15 +17,15 @@ class FileTestCase extends PHPUnit_Framework_TestCase
         $file = new File(static::$path);
 
         $expected = 'test';
-        $file->readBuffer($expected);
+        $file->setBuffer($expected);
 
-        $fileOutput = trim($file->writeBuffer());
+        $fileOutput = trim($file->getBuffer());
 
         $this->assertEquals($expected, $fileOutput);
         $this->assertInstanceOf('\Extended\File\File', $file->save());
 
         $file2 = new File(static::$path, 'r');
-        $fileOuput = trim($file2->writeBuffer());
+        $fileOuput = trim($file2->getBuffer());
         $this->assertEquals($expected, $fileOutput);
     }
 }

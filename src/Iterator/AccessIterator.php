@@ -8,8 +8,9 @@
 namespace Extended\Iterator;
 
 use Extended\Mutator\Getter;
+use Extended\Mutator\Setter;
 
-interface AccessIterator extends \Iterator, Getter
+interface AccessIterator extends \Iterator, Getter, Setter
 {
     /**
      * @return mixed The first element of what's being iterated
