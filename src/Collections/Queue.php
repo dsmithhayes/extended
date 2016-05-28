@@ -1,4 +1,9 @@
-<?php
+<?php declare(strict_types=1);
+
+/**
+ * @author      Dave Smith-Hayes <dsmithhayes@gmail.com>
+ * @license     BSD 3.0
+ */
 
 namespace Extended\Collections;
 
