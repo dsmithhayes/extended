@@ -2,6 +2,7 @@
     "name": "dsmithhayes/extended",
     "description": "Extended SPL interfaces and classes.",
     "type": "Library",
+    "version": "0.4.0",
     "require": {
         "php": ">=7.0"
     },

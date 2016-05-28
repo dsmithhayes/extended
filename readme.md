@@ -15,8 +15,8 @@ There are two ways to test the Extended package.
 
 ### Virtually
 
-    local$ vagrant up --provision
-    local$ vagrant ssh
-    vagrant$ cd /vagrant
-    vagrant$ composer install
-    vagrant$ ./vendor/bin/phpunit
+    [local] $ vagrant up --provision
+    [local] $ vagrant ssh
+    [vagrant] $ cd /vagrant
+    [vagrant] $ composer install
+    [vagrant] $ ./vendor/bin/phpunit
