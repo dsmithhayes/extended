@@ -146,6 +146,4 @@ class LinkedList implements ControlIterator, AccessIterator
     {
         $this->list[] = $value;
     }
-
-
 }
