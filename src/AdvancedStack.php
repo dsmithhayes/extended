@@ -8,15 +8,18 @@ class AdvancedStack extends BasicStack implements \Iterator
 {
     /**
      * Resets the entire stack.
+     *
+     * @return void
      */
     public function reset()
     {
-        $this->stack = [];
+        $this->stack   = [];
         $this->pointer = 0;
     }
 
     /**
-     * @return mixed The current item in the stack
+     * @return mixed
+     *      The current item in the stack
      */
     public function current()
     {
@@ -24,7 +27,8 @@ class AdvancedStack extends BasicStack implements \Iterator
     }
 
     /**
-     * @return int The current position of the stack pointer
+     * @return int
+     *      The current position of the stack pointer
      */
     public function key()
     {
@@ -33,6 +37,8 @@ class AdvancedStack extends BasicStack implements \Iterator
 
     /**
      * Decrements the stack pointer to the next value in the list.
+     *
+     * @return void
      */
     public function next()
     {
@@ -41,6 +47,8 @@ class AdvancedStack extends BasicStack implements \Iterator
 
     /**
      * Resets the stack pointer to the top of the stack.
+     *
+     * @return void
      */
     public function rewind()
     {
@@ -50,7 +58,8 @@ class AdvancedStack extends BasicStack implements \Iterator
     /**
      * Checks if the stack pointer points to a valid location in the stack
      *
-     * @return bool True if the item exists in the stack
+     * @return bool
+     *      True if the item exists in the stack
      */
     public function valid()
     {
@@ -60,5 +69,32 @@ class AdvancedStack extends BasicStack implements \Iterator
         }
 
         return true;
+    }
+
+    /**
+     * Assures the stack pointer can't be set to an invalid range
+     *
+     * @param  int $value
+     *      A stack pointer to set
+     * @return int
+     *      A valid stack pointer
+     */
+    protected function pointerCeiling($value)
+    {
+        $cieling = count($this->stack) - 1;
+        return ($value > $cieling) ? $cieling : $value;
+    }
+
+    /**
+     * Assures the stack pointer can't be set to an invalid range
+     *
+     * @param  int $value
+     *      A stack pointer to set
+     * @return int
+     *      A valid stack pointer
+     */
+    protected function pointerFloor($value)
+    {
+        return ($value < 0) ? 0 : $value;
     }
 }

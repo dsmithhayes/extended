@@ -37,7 +37,9 @@ class LinkedList implements ControlIterator, AccessIterator
         }
     }
 
-    /** Implemented from the Iterator interface */
+    /*******************************************
+     * Implemented from the Iterator interface *
+     *******************************************/
 
     /**
      * @return mixed
@@ -50,6 +52,8 @@ class LinkedList implements ControlIterator, AccessIterator
 
     /**
      * Resets the list to the beginning
+     *
+     * @return void
      */
     public function rewind()
     {
@@ -58,6 +62,8 @@ class LinkedList implements ControlIterator, AccessIterator
 
     /**
      * Moves to the next item in the list
+     *
+     * @return void
      */
     public function next()
     {
@@ -97,16 +103,20 @@ class LinkedList implements ControlIterator, AccessIterator
 
     /**
      * @return bool
+     *      True if the key is the last item in the list
      */
     public function isLast()
     {
         return ($this->key === (count($this->list) - 1)) ? true : false;
     }
 
-    /** Implemented from the AccessIterator interface */
+    /************************************************
+    * Implemented from the AccessIterator interface *
+    *************************************************/
 
     /**
      * @return mixed
+     *      The first item in the list
      */
     public function getFirst()
     {
@@ -115,6 +125,7 @@ class LinkedList implements ControlIterator, AccessIterator
 
     /**
      * @return mixed
+     *      The last item in the list
      */
     public function getLast()
     {
@@ -122,8 +133,10 @@ class LinkedList implements ControlIterator, AccessIterator
     }
 
     /**
-     * @param  int
+     * @param int $key
+     *      The key of the item in the list to return
      * @return mixed
+     *      The item in the list referenced by `$key`
      */
     public function get($key)
     {
@@ -131,8 +144,10 @@ class LinkedList implements ControlIterator, AccessIterator
     }
 
     /**
-     * @param int   The position in the list
-     * @param mixed The item to set
+     * @param int
+     *      The position in the list
+     * @param mixed
+     *      The item to set
      */
     public function set($key, $value)
     {
@@ -140,7 +155,8 @@ class LinkedList implements ControlIterator, AccessIterator
     }
 
     /**
-     * @param mixed An item to add to the list
+     * @param mixed
+     *      An item to add to the list
      */
     public function add($value)
     {

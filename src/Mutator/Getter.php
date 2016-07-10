@@ -8,7 +8,8 @@ namespace Extended\Mutator;
 interface Getter
 {
     /**
-     * @param string $key The identifier of the property to retrieve
+     * @param string $key
+     *      The reference to the property to retrieve
      */
     public function get($key);
 }
