@@ -53,8 +53,7 @@ class BasicStack implements Stack
 
         // decrements here
         unset($this->stack[$this->pointer--]);
-
-        $this->pointer = $this->pointerFloor($this->pointer);
+        
         return $item;
     }
 
