@@ -11,7 +11,7 @@ namespace Extended;
 
 class Math
 {
-    public function add($x, $y)
+    public function sum($x, $y)
     {
         return $x + $y;
     }
