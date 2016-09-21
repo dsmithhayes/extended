@@ -5,7 +5,7 @@ namespace Extended\Immutable;
 use Extended\Mutable\GetInferace;
 use Extended\Immutable\ImmutableInterface;
 
-abstract class Immutable implements ImmutableInterface
+class Immutable implements ImmutableInterface
 {
     /**
      * @var array
@@ -55,7 +55,7 @@ abstract class Immutable implements ImmutableInterface
      * @param string $value
      *      The value to set, and immediately discard
      */
-    public function __set($key, $value): null
+    public function __set($key, $value)
     {
         return null;
     }

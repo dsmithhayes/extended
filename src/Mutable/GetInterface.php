@@ -1,6 +1,6 @@
 <?php
 
-namespace Extended\Mutatable;
+namespace Extended\Mutable;
 
 interface GetInterface
 {

@@ -2,7 +2,7 @@
 
 namespace Extended\Iterator;
 
-use Extended\Mutator\GetInterface;
+use Extended\Mutable\GetInterface;
 
 interface AccessIterator extends \Iterator, GetInterface
 {

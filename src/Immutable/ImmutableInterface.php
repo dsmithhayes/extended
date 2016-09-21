@@ -2,7 +2,7 @@
 
 namespace Extended\Immutable;
 
-class ImmutableInterface
+interface ImmutableInterface
 {
     /**
      * @param string $key

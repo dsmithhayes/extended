@@ -5,7 +5,7 @@ namespace Extended\Mutable;
 use Extended\Mutable\GetInterface;
 use Extended\Mutable\SetInterface;
 
-abstract class Mutable implements GetInterface, SetInterface
+class Mutable implements GetInterface, SetInterface
 {
     /**
      * @var array
@@ -47,6 +47,12 @@ abstract class Mutable implements GetInterface, SetInterface
         return $this->values[$name];
     }
 
+    /**
+     * @param string $name
+     *      The name of the property to set
+     * @param mixed $value
+     *      The value for the property to set
+     */
     public function __set(string $name, $value)
     {
         $this->set($name, $value);
