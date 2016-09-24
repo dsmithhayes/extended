@@ -4,33 +4,38 @@ namespace Extended\Immutable;
 
 use Extended\Mutable\GetInferace;
 use Extended\Immutable\ImmutableInterface;
+use Extended\Traits\DeepCopyTrait;
+use Extended\Exception\ImmutableException;
 
 class Immutable implements ImmutableInterface
 {
-    /**
-     * @var array
-     *      The value of the object
-     */
-    private $values;
+    use DeepCopyTrait;
 
     /**
-     * @param array $values
-     *      The values for the obect with the key
+     * @var mixed
+     *      The value of the object
      */
-    public function __construct(array $values)
+    private $value;
+
+    /**
+     * @param array $value
+     *      The value for the obect with the key
+     */
+    public function __construct($value)
     {
-        $this->values = $values;
+        $this->value = $value;
     }
+
 
     /**
      * @param mixed $key
-     *      The name of the values in the object
+     *      The name of the value in the object
      * @return mixed
      *      The value
      */
     public function get($key)
     {
-        return $this->values[$key];
+        return $this->deepCopy($this->value[$key]);
     }
 
     /**
@@ -47,16 +52,8 @@ class Immutable implements ImmutableInterface
         return $this->get($key);
     }
 
-    /**
-     * Does nothing if you try and set an immutable value
-     *
-     * @param string $key
-     *      The name of the property within the object
-     * @param string $value
-     *      The value to set, and immediately discard
-     */
     public function __set($key, $value)
     {
-        return null;
+        throw new ImmutableException('Unable to set value.');
     }
 }
