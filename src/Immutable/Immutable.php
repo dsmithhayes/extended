@@ -52,6 +52,15 @@ class Immutable implements ImmutableInterface
         return $this->get($key);
     }
 
+    /**
+     * Trying to change immutable data is met with an exception.
+     *
+     * @param string $key
+     * @param mixed $value
+     * @throws \Extended\Exception\ImmutableException
+     *      This exception is always thrown when trying to set the values inside
+     *      this data structure.
+     */
     public function __set($key, $value)
     {
         throw new ImmutableException('Unable to set value.');
