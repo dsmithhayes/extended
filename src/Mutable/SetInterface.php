@@ -1,11 +1,11 @@
 <?php
 
-namespace Extended\Mutator;
+namespace Extended\Mutable;
 
 /**
  * Another moderately useless interface, but what the hey!
  */
-interface Setter
+interface SetInterface
 {
     /**
      * @param mixed $key

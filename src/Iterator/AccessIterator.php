@@ -2,9 +2,9 @@
 
 namespace Extended\Iterator;
 
-use Extended\Mutator\Getter;
+use Extended\Mutable\GetInterface;
 
-interface AccessIterator extends \Iterator, Getter
+interface AccessIterator extends \Iterator, GetInterface
 {
     /**
      * @return mixed The first element of what's being iterated
@@ -16,4 +16,3 @@ interface AccessIterator extends \Iterator, Getter
      */
     public function getLast();
 }
-

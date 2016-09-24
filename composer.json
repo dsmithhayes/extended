@@ -13,8 +13,7 @@
     "authors": [
         {
             "name": "Dave Smith-Hayes",
-            "email": "me@davesmithhayes.com",
-            "website": "https://davesmithhayes.com"
+            "email": "me@davesmithhayes.com"
         }
     ],
     "autoload": {

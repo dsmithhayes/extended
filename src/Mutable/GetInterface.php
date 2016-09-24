@@ -1,11 +1,8 @@
 <?php
 
-namespace Extended\Mutator;
+namespace Extended\Mutable;
 
-/**
- * These are really unessecary if you understand how the `__get()` methods works.
- */
-interface Getter
+interface GetInterface
 {
     /**
      * @param string $key
