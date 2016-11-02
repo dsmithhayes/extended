@@ -1,5 +1,7 @@
 <?php
 
+namespace Extended\Collections;
+
 /**
  * When a class implements Mappable, they are accepting a callback to apply to
  * each member of an array the object has access to.
