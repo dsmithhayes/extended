@@ -55,8 +55,8 @@ class MapTraitTestCase extends PHPUnitTestCase
         };
 
         foreach ($mapper->mapGenerator(str_split($str), $callback) as $value) {
-            $matches = preg_match('/[word]/', $value);
-            $this->assertTrue($matches > 0);
+            $matches = preg_match('/[WORD]/', $value);
+            $this->assertTrue(($matches > 0));
         }
     }
 }
