@@ -3,6 +3,7 @@
 namespace Extended\Process;
 
 use Extended\Process\Runnable;
+use Extended\File\Buffer;
 
 class Fork
 {
@@ -12,7 +13,20 @@ class Fork
      */
     protected $pid;
 
-    public function fork(Runnable $parent, Runnable $child)
+    protected static $buffer;
+
+    public function __construct($buffer = '')
+    {
+        self::$buffer = new class($buffer) extends Buffer {
+            public function appendBuffer($b)
+            {
+                $this->buffer .= $b;
+                return $this;
+            }
+        };
+    }
+
+    public function fork(Runnable $child)
     {
         $this->pid = pcntl_fork();
 
@@ -20,11 +34,19 @@ class Fork
             $error = pcntl_strerror(pcntl_get_last_error());
             throw new ProcessException('Unable to fork the process: ' . $error);
         } elseif ($this->pid) {
-            $parent->run();
             return pcntl_wait($this->pid);
-        } else {
-            $child->run();
-            exit(0);
         }
+
+        self::$buffer->appendBuffer($child->run());
+    }
+
+    public function getBuffer()
+    {
+        return self::$buffer->writeBuffer();
+    }
+
+    public function clearBuffer()
+    {
+        self::$buffer->clearBuffer();
     }
 }

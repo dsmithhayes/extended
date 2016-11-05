@@ -32,17 +32,25 @@ class ProcessTestCase extends PHPUnitTestCase
         $child = new class implements Runnable {
             public function run()
             {
-                return "I am the child. ";
+                return "I am the child.";
             }
         };
 
-        $parent = new class implements Runnable {
-            public function run()
-            {
-                return "I am the parent.";
-            }
-        };
+        $f = new Fork();
+        $f->fork($child);
+        $bufferedOutput = $f->getBuffer();
+        $this->assertEquals('I am the child.', $bufferedOutput);
 
-        $this->assertEquals('I am the child. I am the parent.', (new Fork)->fork($parent, $child));
+        // Static buffer that never changes.
+        $f->fork($child);
+
+        $bufferedOutput = $f->getBuffer();
+        $this->assertEquals('I am the child.I am the child.', $bufferedOutput);
+
+        $f->clearBuffer();
+        $f->fork($child);
+
+        $bufferedOutput = $f->getBuffer();
+        $this->assertEquals('I am the child.', $bufferedOutput);
     }
 }
