@@ -53,4 +53,30 @@ class ProcessTestCase extends PHPUnitTestCase
         $bufferedOutput = $f->getBuffer();
         $this->assertEquals('I am the child.', $bufferedOutput);
     }
+
+    public function testProcessQueue()
+    {
+        $first = new class implements Runnable {
+            public function run()
+            {
+                return 1;
+            }
+        };
+
+        $second = new class implements Runnable {
+            public function run()
+            {
+                return 2;
+            }
+        };
+
+        $q = new ProcessQueue([$first, $second]);
+        $f = new Fork();
+
+        foreach ($q->dequeueAll() as $p) {
+            $f->fork($p);
+        }
+
+        $this->assertEquals(12, $f->getBuffer());
+    }
 }
