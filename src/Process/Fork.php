@@ -20,12 +20,6 @@ class Fork
     protected static $buffer;
 
     /**
-     * @var int
-     *      The total size that can be set for the buffer
-     */
-    protected static $bufferLimit;
-
-    /**
      * @param string $buffer
      *      Pre-existing STDOUT buffer
      */
@@ -38,8 +32,6 @@ class Fork
                 return $this;
             }
         };
-
-        self::$bufferLimit = ini_get('memory_limit');
     }
 
     /**
@@ -60,11 +52,18 @@ class Fork
         self::$buffer->append($child->run());
     }
 
+    /**
+     * @return string
+     *      The output of all the children processes.
+     */
     public function getBuffer()
     {
         return self::$buffer->output();
     }
 
+    /**
+     * Clears all of the data in the current buffer.
+     */
     public function clearBuffer()
     {
         self::$buffer->clear();
