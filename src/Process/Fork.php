@@ -13,12 +13,26 @@ class Fork
      */
     protected $pid;
 
+    /**
+     * @var \Extended\File\Buffer
+     *      Active buffer of all the children's STDOUT
+     */
     protected static $buffer;
 
+    /**
+     * @var int
+     *      The total size that can be set for the buffer
+     */
+    protected static $bufferLimit;
+
+    /**
+     * @param string $buffer
+     *      Pre-existing STDOUT buffer
+     */
     public function __construct($buffer = '')
     {
         self::$buffer = new class($buffer) extends Buffer {
-            public function appendBuffer($b)
+            public function append($b)
             {
                 $this->buffer .= $b;
                 return $this;
@@ -26,6 +40,10 @@ class Fork
         };
     }
 
+    /**
+     * @param \Extended\Process\Runnable $child
+     *      A runnable process to fork
+     */
     public function fork(Runnable $child)
     {
         $this->pid = pcntl_fork();
@@ -37,16 +55,16 @@ class Fork
             return pcntl_wait($this->pid);
         }
 
-        self::$buffer->appendBuffer($child->run());
+        self::$buffer->append($child->run());
     }
 
     public function getBuffer()
     {
-        return self::$buffer->writeBuffer();
+        return self::$buffer->output();
     }
 
     public function clearBuffer()
     {
-        self::$buffer->clearBuffer();
+        self::$buffer->clear();
     }
 }
