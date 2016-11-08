@@ -3,7 +3,7 @@
 namespace Extended\Process;
 
 use Extended\Process\Runnable;
-use Extended\File\Buffer;
+use Extended\Stream\Buffer;
 
 class Fork
 {
@@ -14,7 +14,7 @@ class Fork
     protected $pid;
 
     /**
-     * @var \Extended\File\Buffer
+     * @var \Extended\Stream\Buffer
      *      Active buffer of all the children's STDOUT
      */
     protected static $buffer;
@@ -38,6 +38,8 @@ class Fork
                 return $this;
             }
         };
+
+        self::$bufferLimit = ini_get('memory_limit');
     }
 
     /**

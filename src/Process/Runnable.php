@@ -9,5 +9,10 @@ namespace Extended\Process;
  */
 interface Runnable
 {
+    /**
+     * Ideally one would create an anonymous class that curries in what ever
+     * values necessary to start a runnable process. The return should be
+     * treated as an standard output.
+     */
     public function run();
 }
