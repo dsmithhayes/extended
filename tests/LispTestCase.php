@@ -8,8 +8,12 @@ class LispTestCase extends PHPUnitTestCase
 {
     public function testParser()
     {
-        $parser = new Parser('(+ 3 4)');
-        print_r($parser->run());
-        exit;
+        $parser = new Parser();
+
+        $tokens = $parser->tokenize('(+ 1 2)');
+        $this->assertNotEmpty($tokens);
+        $this->assertEquals('(', $tokens[0]);
+
+        
     }
 }

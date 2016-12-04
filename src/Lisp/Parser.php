@@ -11,15 +11,18 @@ use Extended\Process\Runnable;
  */
 class Parser implements Runnable
 {
+    /**
+     * @var The callstack.
+     */
     public $stack;
 
     /**
      * @param string $stream
      *      A string of Lisp code. (+ 5 (- 9 3))
      */
-    public function __construct(string $stream)
+    public function __construct()
     {
-        $this->stack = $this->parenthesize($this->tokenize($stream));
+
     }
 
     /**
@@ -28,7 +31,7 @@ class Parser implements Runnable
      * @return array
      *      An array of each token
      */
-    private function tokenize(string $stream): array
+    public function tokenize(string $stream): array
     {
         $stream = preg_replace('/\(/', ' ( ', $stream);
         $stream = preg_replace('/\)/', ' ) ', $stream);
@@ -38,37 +41,13 @@ class Parser implements Runnable
 
     /**
      * Creates a nested array of the call stack.
-     *
-     * @param array $input
-     *      The tokenized stream
-     * @param array|null $list
-     *      The next list of the stream
-     * @return array
-     *      The nested categories.
      */
-    private function parenthesize($input, $list = null)
+    public function parenthesize(array $input, $list = [])
     {
-        if (is_null($list)) {
-            return $this->parenthesize($input, []);
-        } else {
-            $token = array_shift($input);
+        $token = array_shift($input);
 
-            if (is_null($token)) {
-                return array_pop($list);
-            }
-
-            switch ($token) {
-                case '(':
-                    array_push($list, $this->parenthesize($input, []));
-                    return parenthesize($input, $list);
-                    break;
-                case ')':
-                    return $list;
-                default:
-                    return $this->parenthesize(
-                        $input, array_push($list, $this->categorize($token))
-                    );
-            }
+        if (substr($token, 0, 1) === '(') {
+            
         }
     }
 
@@ -78,11 +57,11 @@ class Parser implements Runnable
      * @return array
      *      The parenthesized stream of functions
      */
-    private function categorize($token)
+    public function categorize($token)
     {
-        $lit = function($is_string = false) use ($token) {
+        $lit = function($token, $is_string = false) {
             if ($is_string) {
-                $token = substr(substr($token, -1), 1);
+                $token = substr($token, 1, -1);
             }
 
             return [
@@ -92,11 +71,11 @@ class Parser implements Runnable
         };
 
         if (is_numeric($token)) {
-            return $lit();
+            return $lit($token);
         }
 
-        if (substr($token, 1) === '"' || substr($token, -1) === '"') {
-            return $lit(true);
+        if (substr($token, 1) === '"' && substr($token, -1) === '"') {
+            return $lit($token, true);
         }
 
         return [
@@ -106,10 +85,21 @@ class Parser implements Runnable
     }
 
     /**
+     * @return array
+     *      The parsed call stack
+     */
+    public function getStack(): array
+    {
+        return $this->stack;
+    }
+
+    /**
      * Returns the parsed and categorized parsed data
      */
     public function run()
     {
-        return $this->stack;
+        // iterate over the stack,
+
+        // make the calls
     }
 }
