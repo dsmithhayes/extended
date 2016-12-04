@@ -12,15 +12,16 @@ use Extended\Process\Runnable;
 class Parser implements Runnable
 {
     /**
-     * @var The callstack.
+     * @var string
+     *      The raw lisp stream as a buffer.
      */
-    public $stack;
+    public $buffer;
 
     /**
      * @param string $stream
      *      A string of Lisp code. (+ 5 (- 9 3))
      */
-    public function __construct()
+    public function __construct(string $stream)
     {
 
     }
@@ -47,7 +48,7 @@ class Parser implements Runnable
         $token = array_shift($input);
 
         if (substr($token, 0, 1) === '(') {
-            
+
         }
     }
 
@@ -74,7 +75,7 @@ class Parser implements Runnable
             return $lit($token);
         }
 
-        if (substr($token, 1) === '"' && substr($token, -1) === '"') {
+        if (substr($token, 0, 1) === '"' && substr($token, -1, 1) === '"') {
             return $lit($token, true);
         }
 
@@ -82,15 +83,6 @@ class Parser implements Runnable
             'type' => 'identifier',
             'value' => $token
         ];
-    }
-
-    /**
-     * @return array
-     *      The parsed call stack
-     */
-    public function getStack(): array
-    {
-        return $this->stack;
     }
 
     /**
