@@ -61,9 +61,7 @@ class Parser implements Runnable
     public function categorize($token)
     {
         $lit = function($token, $is_string = false) {
-            if ($is_string) {
-                $token = substr($token, 1, -1);
-            }
+            $token = ($is_string) ? substr($token, 1, -1) : $token;
 
             return [
                 'type' => 'literal',

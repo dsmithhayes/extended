@@ -16,7 +16,7 @@ class LispTestCase extends PHPUnitTestCase
     public function testParser()
     {
         $lisp = '(+ 1 2)';
-        $parser = new Parser();
+        $parser = new Parser($lisp);
 
         $tokens = $parser->tokenize($lisp);
         $this->assertNotEmpty($tokens);
