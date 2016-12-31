@@ -50,6 +50,7 @@ class Fork
         }
 
         self::$buffer->append($child->run());
+        return $this;
     }
 
     /**

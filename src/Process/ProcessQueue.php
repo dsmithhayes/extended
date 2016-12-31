@@ -2,12 +2,17 @@
 
 namespace Extended\Process;
 
+use Serializable;
 use Extended\Collections\Queue;
 use Extended\Process\Runnable;
 use Exteneded\Exception\ProcessException;
 
-class ProcessQueue implements Queue
+class ProcessQueue implements Queue, Serializable
 {
+    /**
+     * @var array
+     *      An array of Runnable objects
+     */
     private $processes;
 
     /**
@@ -73,7 +78,25 @@ class ProcessQueue implements Queue
     }
 
     /**
-     * Runs the next process
+     * @return string
+     *      All of the processes, serialized
+     */
+    public function serialize(): string
+    {
+        return serialize($this->processes);
+    }
+
+    /**
+     * @param string $serliazedData
+     *      The serialized process data
+     */
+    public function unserialize(string $serializedData)
+    {
+        $this->processes = unserialize($serializedData);
+    }
+
+    /**
+     * Runs the next process, output the contents of the process.
      */
     public function runNext()
     {
