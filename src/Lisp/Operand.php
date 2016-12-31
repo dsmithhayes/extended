@@ -15,9 +15,4 @@ class Operand
     {
         return $this->token;
     }
-
-    public function isLiteral($token = null): bool
-    {
-        return false;
-    }
 }

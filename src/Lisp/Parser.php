@@ -15,7 +15,7 @@ class Parser implements Runnable
      * @var string
      *      The raw lisp stream as a buffer.
      */
-    public $buffer;
+    public $stream;
 
     /**
      * @param string $stream
@@ -23,17 +23,19 @@ class Parser implements Runnable
      */
     public function __construct(string $stream)
     {
-
+        $this->stream = $stream;
     }
 
     /**
-     * @param string $stream
+     * @param string|null $stream
      *      The stream of Lisp
      * @return array
      *      An array of each token
      */
-    public function tokenize(string $stream): array
+    public function tokenize($stream = null): array
     {
+        $stream = ($stream) ?? $this->stream;
+
         $stream = preg_replace('/\(/', ' ( ', $stream);
         $stream = preg_replace('/\)/', ' ) ', $stream);
 
@@ -47,8 +49,15 @@ class Parser implements Runnable
     {
         $token = array_shift($input);
 
-        if (substr($token, 0, 1) === '(') {
-
+        if (!$token) {
+            return array_shift($list);
+        } elseif (substr($token, 0, 1) === '(') {
+            $list = array_push($list, $this->parenthesize($input, []));
+            return $this->parenthesize($input, $list);
+        } elseif (substr($token, -1, 1) === ')') {
+            return $list;
+        } else {
+            return $this->parenthesize($input, ($list[] = $this->categorize($token)));
         }
     }
 

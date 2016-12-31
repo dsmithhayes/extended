@@ -28,6 +28,8 @@ class LispTestCase extends PHPUnitTestCase
 
         $category = $parser->categorize('+');
         $this->assertEquals('identifier', $category['type']);
+
+        print_r($parser->parenthesize($parser->tokenize($lisp)));
     }
 
     public function testOperator()

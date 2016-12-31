@@ -42,13 +42,17 @@ class Fork
     {
         $this->pid = pcntl_fork();
 
+        // If there is an error with the process
         if ($this->pid == -1) {
             $error = pcntl_strerror(pcntl_get_last_error());
             throw new ProcessException('Unable to fork the process: ' . $error);
+
+        // if the PID is still in the child
         } elseif ($this->pid) {
             return pcntl_wait($this->pid);
         }
 
+        // The child process
         self::$buffer->append($child->run());
     }
 
