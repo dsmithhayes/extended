@@ -10,11 +10,19 @@ class ProcessQueue implements Queue
 {
     private $processes;
 
+    /**
+     * @param array $processes
+     *      An array of implemented Runnable objects
+     */
     public function __construct(array $processes = [])
     {
         $this->enqueueMany($processes);
     }
 
+    /**
+     * @param Extended\Process\Runnable $process
+     *      A process to enqueue
+     */
     public function enqueue($process)
     {
         if ($process instanceof Runnable) {
@@ -22,9 +30,13 @@ class ProcessQueue implements Queue
             return $this;
         }
 
-        throw new ProcessException('Not a process.');
+        throw new ProcessException('Adding non-Runnable to ProcessQueue.');
     }
 
+    /**
+     * @param array $processes
+     *      An array of Runnable objects to add to the queue
+     */
     public function enqueueMany(array $processes)
     {
         $f = function () use ($processes) {
@@ -42,11 +54,17 @@ class ProcessQueue implements Queue
         return $this;
     }
 
-    public function dequeue()
+    /**
+     * @return Extended\Process\Runnable
+     */
+    public function dequeue(): Runnable
     {
         return array_shift($this->processes);
     }
 
+    /**
+     * @yield Extended\Process\Runnable;
+     */
     public function dequeueAll()
     {
         foreach ($this->processes as $p) {
@@ -54,15 +72,11 @@ class ProcessQueue implements Queue
         }
     }
 
+    /**
+     * Runs the next process
+     */
     public function runNext()
     {
-        $this->dequeue()->run();
-    }
-
-    public function runAll()
-    {
-        foreach ($this->processes as $process) {
-            yield $process->run();
-        }
+        return $this->dequeue()->run();
     }
 }

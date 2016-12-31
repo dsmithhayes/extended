@@ -93,7 +93,10 @@ class ProcessTestCase extends PHPUnitTestCase
             }
         };
 
-        $q = new ProcessQueue([$r, (new $r(2))]);
+        $q = new ProcessQueue([
+            $r,
+            (new $r(2))
+        ]);
 
         $f = new Fork();
 
@@ -107,12 +110,39 @@ class ProcessTestCase extends PHPUnitTestCase
           ->enqueue((new $r(4)))
           ->enqueue((new $r(5)));
 
-          $f->clearBuffer();
+        $f->clearBuffer();
 
         foreach ($q->dequeueAll() as $p) {
             $f->fork($p);
         }
 
         $this->assertEquals(12345, $f->getBuffer());
+    }
+
+    public function testRunNext()
+    {
+        $r = new class(0) implements Runnable {
+            private $i;
+
+            public function __construct(int $i)
+            {
+                $this->i = $i;
+            }
+
+            public function run()
+            {
+                return $this->i;
+            }
+        };
+
+        $processQueue = new ProcessQueue([
+            $r,
+            (new $r(1)),
+        ]);
+
+        $output = $processQueue->runNext();
+        $this->assertEquals(0, $output);
+        $output = $processQueue->runNext();
+        $this->assertEquals(1, $output);
     }
 }
