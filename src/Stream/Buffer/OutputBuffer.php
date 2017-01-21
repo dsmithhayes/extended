@@ -82,15 +82,33 @@ class OutputBuffer extends Buffer
         return ob_get_contents();
     }
 
+    public function clear()
+    {
+        $this->clean();
+        return $this;
+    }
+
     public function clean()
     {
         ob_clean();
         return $this;
     }
 
+    public function endClean()
+    {
+        ob_end_clean();
+        return $this;
+    }
+
     public function flush()
     {
         ob_flush();
+        return $this;
+    }
+
+    public function endFlush()
+    {
+        ob_end_flush();
         return $this;
     }
 }
