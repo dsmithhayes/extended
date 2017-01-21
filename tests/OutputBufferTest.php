@@ -14,5 +14,10 @@ class OutputBufferTest extends PHPUnitTestCase
 Hello, world.<?php
         $this->assertEquals("Hello, world.", $ob->output());
         $ob->clean()->endClean();
+
+        $ob->start();
+        echo "hello.";
+        $this->assertEquals("hello.", $ob->output());
+        $ob->clean()->endClean();
     }
 }

@@ -82,6 +82,9 @@ class OutputBuffer extends Buffer
         return ob_get_contents();
     }
 
+    /**
+     * Inherited method from the Buffer class
+     */
     public function clear()
     {
         $this->clean();
@@ -92,6 +95,11 @@ class OutputBuffer extends Buffer
     {
         ob_clean();
         return $this;
+    }
+
+    public function getClen()
+    {
+        return ob_get_clean();
     }
 
     public function endClean()
@@ -106,9 +114,31 @@ class OutputBuffer extends Buffer
         return $this;
     }
 
+    public function getFlush(): string
+    {
+        return ob_get_flush();
+    }
+
     public function endFlush()
     {
         ob_end_flush();
         return $this;
     }
+
+    public function getLength(): int
+    {
+        return ob_get_length();
+    }
+
+    public function getLevel(): int
+    {
+        return ob_get_level();
+    }
+
+    public function getStatus(bool $full_status = false): array
+    {
+        return ob_get_status($full_status);
+    }
+
+
 }
