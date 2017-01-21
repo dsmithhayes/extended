@@ -19,5 +19,10 @@ Hello, world.<?php
         echo "hello.";
         $this->assertEquals("hello.", $ob->output());
         $ob->endClean();
+
+        $ob->start();
+        $ob->input('test');
+        $this->assertEquals("test", $ob->output());
+        $ob->endClean();
     }
 }
