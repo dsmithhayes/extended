@@ -90,9 +90,9 @@ class ProcessQueue implements Queue, Serializable
      * @param string $serliazedData
      *      The serialized process data
      */
-    public function unserialize(string $serializedData)
+    public function unserialize($serializedData)
     {
-        $this->processes = unserialize($serializedData);
+        $this->processes = unserialize((string) $serializedData);
     }
 
     /**
