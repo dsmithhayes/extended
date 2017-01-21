@@ -91,54 +91,91 @@ class OutputBuffer extends Buffer
         return $this;
     }
 
+    /**
+     * Wraps the `ob_clean()` function
+     */
     public function clean()
     {
         ob_clean();
         return $this;
     }
 
-    public function getClen()
+    /**
+     * Returns the current buffer and clear it.
+     *
+     * @return string
+     *      The buffer
+     */
+    public function getClean()
     {
         return ob_get_clean();
     }
 
+    /**
+     * Wraps the `ob_end_clean()` function
+     */
     public function endClean()
     {
         ob_end_clean();
         return $this;
     }
 
+
+    /**
+     * Wraps the `ob_flush()` function
+     */
     public function flush()
     {
         ob_flush();
         return $this;
     }
 
+    /**
+     * Returns the outpu buffer and closes it.
+     *
+     * @return string
+     *      The current data in the buffer
+     */
     public function getFlush(): string
     {
         return ob_get_flush();
     }
 
+    /**
+     * Wraps the `ob_end_flush()` function
+     */
     public function endFlush()
     {
         ob_end_flush();
         return $this;
     }
 
+    /**
+     * @return int
+     *      The length of the buffer in bytes
+     */
     public function getLength(): int
     {
         return ob_get_length();
     }
 
+    /**
+     * @return int
+     *      The level of the buffer
+     */
     public function getLevel(): int
     {
         return ob_get_level();
     }
 
-    public function getStatus(bool $full_status = false): array
+    /**
+     * @param bool $fullStatus
+     *      Whether or not to provide all of the information
+     * @return array
+     *      Array of information about the output buffer
+     */
+    public function getStatus(bool $fullStatus = false): array
     {
-        return ob_get_status($full_status);
+        return ob_get_status($fullStatus);
     }
-
-
 }
