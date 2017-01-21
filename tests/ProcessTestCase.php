@@ -64,6 +64,7 @@ class ProcessTestCase extends PHPUnitTestCase
         // Static buffer that never changes.
         $f->fork($child);
 
+        // demonstrate the trivial nature of the buffer.
         $bufferedOutput = $f->getBuffer();
         $this->assertEquals('I am the child.I am the child.', $bufferedOutput);
 
