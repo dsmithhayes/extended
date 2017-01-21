@@ -74,6 +74,15 @@ class OutputBuffer extends Buffer
     }
 
     /**
+     * Overrides the `input()` method from the parent class
+     */
+    public function input($value)
+    {
+        echo (string) $value;
+        return $this;
+    }
+
+    /**
      * @return string
      *      Returns all the data in the output buffer
      */
