@@ -96,8 +96,7 @@ class OutputBuffer extends Buffer
      */
     public function clear()
     {
-        $this->clean();
-        return $this;
+        return $this->clean();
     }
 
     /**
