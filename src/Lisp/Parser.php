@@ -2,20 +2,20 @@
 
 namespace Extended\Lisp;
 
-use Extended\Process\Runnable;
+use Extended\Exception\LispException;
 
 /**
  * When the Parser is run, it returns a nested array of tokenized data.
  *
  * '(+ 5 (- 9 3))' would parse into:
  */
-class Parser implements Runnable
+class Parser
 {
     /**
      * @var string
      *      The raw lisp stream as a buffer.
      */
-    public $stream;
+    protected $stream;
 
     /**
      * @param string $stream
@@ -28,7 +28,8 @@ class Parser implements Runnable
 
     /**
      * @param string|null $stream
-     *      The stream of Lisp
+     *      The stream of Lisp, either the stream that belongs to the object
+     *      or one passed into it.
      * @return array
      *      An array of each token
      */
@@ -39,66 +40,58 @@ class Parser implements Runnable
         $stream = preg_replace('/\(/', ' ( ', $stream);
         $stream = preg_replace('/\)/', ' ) ', $stream);
 
-        return preg_split('/\s/', trim($stream));
+        return array_filter(preg_split('/\s/', trim($stream)));
     }
 
     /**
-     * Creates a nested array of the call stack.
+     * @param array|null $input
+     *      The parsed input steam to organize
+     * @param array $list
+     *      Used for recursion, the list of all tokens categorized
+     * @return array
      */
-    public function parenthesize(array $input, $list = [])
+    public function parenthesize($input = null, $list = []): array
     {
+        $input = ($input) ?? $this->tokenize($this->stream);
         $token = array_shift($input);
 
-        if (!$token) {
-            return array_shift($list);
-        } elseif (substr($token, 0, 1) === '(') {
-            $list = array_push($list, $this->parenthesize($input, []));
+        if (is_null($token)) {
+            return array_pop($list);
+        } elseif ($token === '(') {
+            $list[] = $this->parenthesize($input);
             return $this->parenthesize($input, $list);
-        } elseif (substr($token, -1, 1) === ')') {
+        } elseif ($token === ')') {
             return $list;
-        } else {
-            return $this->parenthesize($input, ($list[] = $this->categorize($token)));
         }
+
+        $list = array_merge($list, $this->categorize($token));
+        return $this->parenthesize($input, $list);
     }
 
     /**
-     * @param mixed $token
-     *      The token to apply to a category
+     * @param mixed $input
+     *      The token
      * @return array
-     *      The parenthesized stream of functions
+     *      A key-value pair that defines if the value is an identifier or a
+     *      literal token.
      */
-    public function categorize($token)
+    public function categorize($input): array
     {
-        $lit = function($token, $is_string = false) {
-            $token = ($is_string) ? substr($token, 1, -1) : $token;
-
+        if (is_numeric($input)) {
             return [
                 'type' => 'literal',
-                'value' => $token
+                'value' => $input
             ];
-        };
-
-        if (is_numeric($token)) {
-            return $lit($token);
+        } elseif ($input[0] === '"' && $input[strlen($input) - 1] === '"') {
+            return [
+                'type' => 'literal',
+                'value' => substr($input, 1, -1)
+            ];
+        } else {
+            return [
+                'type' => 'identifier',
+                'value' => $input
+            ];
         }
-
-        if (substr($token, 0, 1) === '"' && substr($token, -1, 1) === '"') {
-            return $lit($token, true);
-        }
-
-        return [
-            'type' => 'identifier',
-            'value' => $token
-        ];
-    }
-
-    /**
-     * Returns the parsed and categorized parsed data
-     */
-    public function run()
-    {
-        // iterate over the stack,
-
-        // make the calls
     }
 }
