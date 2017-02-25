@@ -27,9 +27,6 @@ class Parser
     }
 
     /**
-     * @param string|null $stream
-     *      The stream of Lisp, either the stream that belongs to the object
-     *      or one passed into it.
      * @return array
      *      An array of each token
      */
