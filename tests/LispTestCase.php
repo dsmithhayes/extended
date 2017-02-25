@@ -11,7 +11,5 @@ class LispTestCase extends PHPUnitTestCase
         $parser = new Parser('(+ 2 (- 5 3))');
         $tokens = $parser->tokenize();
         $this->assertEquals('(', $tokens[0]);
-
-        print_r($parser->parenthesize());
     }
 }
