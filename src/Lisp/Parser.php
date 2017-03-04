@@ -39,4 +39,82 @@ class Parser
 
         return array_filter(preg_split('/\s/', trim($stream)));
     }
+
+    /**
+     * @param string $token
+     * @return callable
+     * @throws LispException
+     */
+    public function toFunc(string $token): callable
+    {
+        switch ($token) {
+            case '+':
+                return function ($a, $b) {
+                    return $a + $b;
+                };
+
+            case '-':
+                return function ($a, $b) {
+                    return $a - $b;
+                };
+
+            case '/':
+                return function ($a, $b) {
+                    return $a / $b;
+                };
+
+            case '*':
+                return function ($a, $b) {
+                    return $a * $b;
+                };
+
+            case '%':
+                return function ($a, $b) {
+                    return $a % $b;
+                };
+
+            case '&':
+                return function ($a, $b) {
+                    return $a & $b;
+                };
+
+            case '&&':
+                return function ($a, $b) {
+                    return $a && $b;
+                };
+
+            case '|':
+                return function ($a, $b) {
+                    return $a | $b;
+                };
+
+            case '||':
+                return function ($a, $b) {
+                    return $a || $b;
+                };
+
+            case '^':
+                return function ($a, $b) {
+                    return $a ^ $b;
+                };
+
+            case '>>':
+                return function ($a, $b) {
+                    return $a >> $b;
+                };
+
+            case '<<':
+                return function ($a, $b) {
+                    return $a << $b;
+                };
+
+            case '~':
+                return function ($a) {
+                    return ~ $a;
+                };
+
+            default:
+                throw new LispException('Unrecognized operation token: ' . $token);
+        }
+    }
 }
