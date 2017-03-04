@@ -1,7 +1,6 @@
 <?php
 
 use PHPUnit_Framework_TestCase as PHPUnitTestCase;
-
 use Extended\Lisp\Parser;
 
 class LispTestCase extends PHPUnitTestCase
@@ -19,5 +18,6 @@ class LispTestCase extends PHPUnitTestCase
 
         $this->assertEquals(2, $parser->toFunc('+')(1, 1));
         $this->assertEquals(10, $parser->toFunc('*')(2, 5));
+        $this->assertEquals(2, $parser->toFunc('<<')(1, 1));
     }
 }
