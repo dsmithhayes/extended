@@ -15,11 +15,15 @@ class MappableArrayTestCase extends PHPUnitTestCase
         });
 
         $this->assertEquals(2, $res[0]);
+
+        return $arr;
     }
 
-    public function testInlineMap()
+    /**
+     * @depends testMap
+     */
+    public function testInlineMap($arr)
     {
-        $arr = new MappableArray([1, 2, 3, 4]);
         $arr->inlineMap(function ($v) {
             return $v * 2;
         });
