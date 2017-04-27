@@ -14,12 +14,13 @@ class Mutable implements GetInterface, SetInterface
     private $values;
 
     /**
-     * @param string $key
+     * @param string $name
      *      The name of the property
      * @param mixed $value
      *      The value to set for the property within the object
+     * @return Mutable
      */
-    public function set(string $name, $value)
+    public function set($name, $value)
     {
         $this->values[$name] = $value;
         return $this;
@@ -37,12 +38,12 @@ class Mutable implements GetInterface, SetInterface
     }
 
     /**
-     * @param string $key
+     * @param $name
      *      The name of the property
      * @return mixed
      *      The value of the property
      */
-    public function get(string $name)
+    public function get($name)
     {
         return $this->values[$name];
     }

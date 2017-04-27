@@ -19,7 +19,7 @@ class Immutable implements ImmutableInterface
 
     /**
      * @param array $value
-     *      The value for the obect with the key
+     *      The value for the object with the key
      */
     public function __construct($value)
     {
@@ -28,6 +28,9 @@ class Immutable implements ImmutableInterface
 
 
     /**
+     * When getting data from the immutable object, every value in the object
+     * must be deep copied to preserve the state of itself.
+     *
      * @param mixed $key
      *      The name of the value in the object
      * @return mixed

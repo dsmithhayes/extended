@@ -36,7 +36,7 @@ abstract class Buffer implements InputBuffer, OutputBuffer
     /**
      * @param mixed $value
      *      The value to read into the buffer
-     * @return \Extended\File\Buffer
+     * @return Buffer
      */
     public function input($value)
     {
@@ -47,7 +47,7 @@ abstract class Buffer implements InputBuffer, OutputBuffer
     /**
      * Clears the entire buffer.
      *
-     * @return \Extended\File\Buffer
+     * @return Buffer
      */
     public function clear()
     {

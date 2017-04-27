@@ -3,6 +3,7 @@
 namespace Extended\Lisp;
 
 use Extended\Exception\LispException;
+use Extended\Lisp\Callstack;
 
 /**
  * When the Parser is run, it returns a nested array of tokenized data.
@@ -27,12 +28,13 @@ class Parser
     }
 
     /**
+     * @param string
      * @return array
      *      An array of each token
      */
-    public function tokenize(): array
+    public function tokenize(string $stream = ''): array
     {
-        $stream = $this->stream;
+        $stream = ($stream) ?? $this->stream;
 
         $stream = preg_replace('/\(/', ' ( ', $stream);
         $stream = preg_replace('/\)/', ' ) ', $stream);
@@ -45,7 +47,7 @@ class Parser
      * @return callable
      * @throws LispException
      */
-    public function toFunc(string $token): callable
+    public function operandToFunc(string $token): callable
     {
         switch ($token) {
             case '+':
@@ -114,7 +116,9 @@ class Parser
                 };
 
             default:
-                throw new LispException('Unrecognized operation token: ' . $token);
+                throw new LispException(
+                    'Unrecognized operator token: "' . $token . '"'
+                );
         }
     }
 }

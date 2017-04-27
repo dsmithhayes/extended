@@ -9,7 +9,7 @@ trait DeepCopyTrait
     use MapTrait;
 
     /**
-     * @param mixed $arr
+     * @param mixed $value
      *      The value to copy
      * @return mixed
      *      The deep copied values

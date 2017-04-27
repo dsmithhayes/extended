@@ -2,8 +2,15 @@
 
 namespace Extended\Traits;
 
+use Generator;
+
 trait MapTrait
 {
+    /**
+     * @param array $arr
+     * @param callable $callback
+     * @return array
+     */
     public function map(array $arr, callable $callback): array
     {
         foreach ($arr as $key => $value) {
@@ -13,6 +20,11 @@ trait MapTrait
         return $arr;
     }
 
+    /**
+     * @param array $arr
+     * @param callable $callback
+     * @return array
+     */
     public function mapDeep(array $arr, callable $callback): array
     {
         foreach ($arr as $key => $value) {
@@ -26,11 +38,15 @@ trait MapTrait
         return $arr;
     }
 
-    public function mapGenerator(array $arr, callable $callback)
+    /**
+     * @param array $arr
+     * @param callable $callback
+     * @return Generator
+     */
+    public function mapGenerator(array $arr, callable $callback): Generator
     {
         foreach ($arr as $val) {
             yield $callback($val);
         }
     }
-
 }

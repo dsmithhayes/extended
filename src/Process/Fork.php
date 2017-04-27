@@ -2,6 +2,7 @@
 
 namespace Extended\Process;
 
+use Extended\Exception\ProcessException;
 use Extended\Process\Runnable;
 use Extended\Stream\Buffer;
 
@@ -37,6 +38,8 @@ class Fork
     /**
      * @param \Extended\Process\Runnable $child
      *      A runnable process to fork
+     * @throws ProcessException
+     * @return void
      */
     public function fork(Runnable $child)
     {
@@ -67,6 +70,7 @@ class Fork
 
     /**
      * Clears all of the data in the current buffer.
+     * @return void
      */
     public function clearBuffer()
     {

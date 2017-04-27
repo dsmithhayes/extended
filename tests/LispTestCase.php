@@ -12,12 +12,12 @@ class LispTestCase extends PHPUnitTestCase
         $this->assertEquals('(', $tokens[0]);
     }
 
-    public function testToFunc()
+    public function testFunctionCall()
     {
         $parser = new Parser('(+ 2 5)');
 
-        $this->assertEquals(2, $parser->toFunc('+')(1, 1));
-        $this->assertEquals(10, $parser->toFunc('*')(2, 5));
-        $this->assertEquals(2, $parser->toFunc('<<')(1, 1));
+        $this->assertEquals(2, ($parser->f('+'))(1, 1));
+        $this->assertEquals(10, ($parser->f('*'))(2, 5));
+        $this->assertEquals(2, ($parser->f('<<'))(1, 1));
     }
 }
