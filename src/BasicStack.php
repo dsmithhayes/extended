@@ -42,7 +42,7 @@ class BasicStack implements Stack
     }
 
     /**
-     * @throws Extended\Exception\BasicStack
+     * @throws StackException
      *      When you attempt to pop from an empty stack
      * @return mixed
      *      The value at the top of the stack
@@ -50,16 +50,13 @@ class BasicStack implements Stack
     public function pop()
     {
         if (empty($this->stack)) {
-            throw new StackException(
-                'The stack is empty.',
-                StackException::STACK_EMPTY
-            );
+            throw new StackException('The stack is empty.',  StackException::STACK_EMPTY);
         }
 
         $item = $this->stack[$this->pointer];
 
-        // decrements here
-        unset($this->stack[$this->pointer--]);
+        unset($this->stack[$this->pointer]);
+        $this->pointer--;
         
         return $item;
     }
