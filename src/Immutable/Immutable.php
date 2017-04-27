@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\Immutable;
 
 use Extended\Mutable\GetInferace;
@@ -7,6 +11,10 @@ use Extended\Immutable\ImmutableInterface;
 use Extended\Traits\DeepCopyTrait;
 use Extended\Exception\ImmutableException;
 
+/**
+ * Class Immutable
+ * @package Extended\Immutable
+ */
 class Immutable implements ImmutableInterface
 {
     use DeepCopyTrait;

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\Process;
 
 use Serializable;
@@ -7,6 +11,10 @@ use Extended\Collections\Queue;
 use Extended\Process\Runnable;
 use Exteneded\Exception\ProcessException;
 
+/**
+ * Class ProcessQueue
+ * @package Extended\Process
+ */
 class ProcessQueue implements Queue, Serializable
 {
     /**
@@ -25,8 +33,8 @@ class ProcessQueue implements Queue, Serializable
     }
 
     /**
-     * @param Extended\Process\Runnable $process
-     *      A process to enqueue
+     * @param mixed $process
+     * @return $this
      */
     public function enqueue($process)
     {
@@ -41,6 +49,7 @@ class ProcessQueue implements Queue, Serializable
     /**
      * @param array $processes
      *      An array of Runnable objects to add to the queue
+     * @return $this
      */
     public function enqueueMany(array $processes)
     {
@@ -60,7 +69,7 @@ class ProcessQueue implements Queue, Serializable
     }
 
     /**
-     * @return Extended\Process\Runnable
+     * @return Runnable
      */
     public function dequeue(): Runnable
     {
@@ -68,9 +77,10 @@ class ProcessQueue implements Queue, Serializable
     }
 
     /**
-     * @yield Extended\Process\Runnable;
+     * @yield Runnable;
+     * @return \Generator
      */
-    public function dequeueAll()
+    public function dequeueAll(): \Generator
     {
         foreach ($this->processes as $p) {
             yield $p;
@@ -87,12 +97,12 @@ class ProcessQueue implements Queue, Serializable
     }
 
     /**
-     * @param string $serliazedData
+     * @param string $serialized
      *      The serialized process data
      */
-    public function unserialize($serializedData)
+    public function unserialize($serialized)
     {
-        $this->processes = unserialize((string) $serializedData);
+        $this->processes = unserialize((string) $serialized);
     }
 
     /**

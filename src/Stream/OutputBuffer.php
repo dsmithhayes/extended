@@ -1,9 +1,16 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\Stream;
 
 /**
  * An OutputBuffer has the ability to return all of the buffer data.
+ *
+ * Interface OutputBuffer
+ * @package Extended\Stream
  */
 interface OutputBuffer
 {

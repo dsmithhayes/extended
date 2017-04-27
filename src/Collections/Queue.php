@@ -1,10 +1,17 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\Collections;
 
 /**
  * Queues are defined as a collection of data that has a first-in, first-out
  * methodology.
+ *
+ * Interface Queue
+ * @package Extended\Collections
  */
 interface Queue
 {

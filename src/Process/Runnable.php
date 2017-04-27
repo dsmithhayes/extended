@@ -1,11 +1,18 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\Process;
 
 /**
  * When a class implemented Runnable, it is able to be processed anywhere in
  * the application. Ideally the implemented `run()` would be a stateless
  * method that does not affect core functionality of the application.
+ *
+ * Interface Runnable
+ * @package Extended\Process
  */
 interface Runnable
 {

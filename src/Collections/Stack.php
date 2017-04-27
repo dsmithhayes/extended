@@ -1,11 +1,18 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\Collections;
 
 /**
  * Stacks are data structures that have a first-in / last-out philosophy. You
  * push data onto the stack, and you pop it off the top. This interface helps
  * define these two crucial methods.
+ *
+ * Interface Stack
+ * @package Extended\Collections
  */
 interface Stack
 {

@@ -1,10 +1,14 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\Collections;
 
 /**
- * When a class implements Mappable, they are accepting a callback to apply to
- * each member of an array the object has access to.
+ * A Mappable array has the ability to create new arrays that have had the
+ * callback function called on each member.
  *
  * Interface Mappable
  * @package Extended\Collections

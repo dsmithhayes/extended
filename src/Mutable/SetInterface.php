@@ -1,9 +1,16 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\Mutable;
 
 /**
  * Another moderately useless interface, but what the hey!
+ *
+ * Interface SetInterface
+ * @package Extended\Mutable
  */
 interface SetInterface
 {

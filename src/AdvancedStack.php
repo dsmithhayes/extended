@@ -1,9 +1,17 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended;
 
 use Extended\BasicStack;
 
+/**
+ * Class AdvancedStack
+ * @package Extended
+ */
 class AdvancedStack extends BasicStack implements \Iterator
 {
     /**

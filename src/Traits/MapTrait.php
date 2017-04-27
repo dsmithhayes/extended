@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\Traits;
 
+/**
+ * Trait MapTrait
+ * @package Extended\Traits
+ */
 trait MapTrait
 {
     public function map(array $arr, callable $callback): array

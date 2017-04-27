@@ -1,15 +1,18 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\Stream\Buffer;
 
 use Extended\Stream\Buffer;
 
 /**
- * @author Dave Smith-Hayes <me@davesmithhayes.com>
- */
-
-/**
  * This class will extend the buffer and wrap PHP's internal output buffer.
+ *
+ * Class OutputBuffer
+ * @package Extended\Stream\Buffer
  */
 class OutputBuffer extends Buffer
 {

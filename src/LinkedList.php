@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended;
 
 use Extended\Iterator\ControlIterator;
@@ -7,6 +11,9 @@ use Extended\Iterator\AccessIterator;
 
 /**
  * A basic LinkedList that implemented the ControlIterator interface.
+ *
+ * Class LinkedList
+ * @package Extended
  */
 class LinkedList implements ControlIterator, AccessIterator
 {

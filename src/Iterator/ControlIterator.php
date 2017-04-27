@@ -1,10 +1,17 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\Iterator;
 
 /**
  * The ControlInterator has two methods that check where where in the iteration
  * the computations currently are.
+ *
+ * Interface ControlIterator
+ * @package Extended\Iterator
  */
 interface ControlIterator extends \Iterator
 {

@@ -1,11 +1,18 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\Stream;
 
 use Extended\Stream\{InputBuffer, OutputBuffer};
 
 /**
  * The buffer is a very basic implementation of a string buffer stream.
+ *
+ * Class Buffer
+ * @package Extended\Stream
  */
 abstract class Buffer implements InputBuffer, OutputBuffer
 {

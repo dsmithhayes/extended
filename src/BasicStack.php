@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended;
 
 use Extended\Collections\Stack;
@@ -7,6 +11,9 @@ use Extended\Exception\StackException;
 
 /**
  * The BasicStack object represents a very slim implementation of a stack.
+ *
+ * Class BasicStack
+ * @package Extended
  */
 class BasicStack implements Stack
 {

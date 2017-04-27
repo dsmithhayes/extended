@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\File;
 
 use Extended\Exception\FileException;
@@ -7,6 +11,9 @@ use Extended\File\File;
 
 /**
  * Represents a temporary file in the file system.
+ *
+ * Class Tmp
+ * @package Extended\File
  */
 class Tmp extends File
 {

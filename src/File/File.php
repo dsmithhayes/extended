@@ -14,8 +14,10 @@ use Serializable;
  * Some times you want a more OOP way to deal with files in PHP. That's what
  * this is. This object will actually open and maintain an open file resource
  * while it is instantiated.
+ *
+ * Class File
+ * @package Extended\File
  */
-
 class File extends Buffer implements Serializable
 {
     /**

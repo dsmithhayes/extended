@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\Immutable;
 
 /**
@@ -7,6 +11,9 @@ namespace Extended\Immutable;
  * has a pesky problem of not being very immutable, so things can change
  * without you even realizing it. The idea of this interface, and the subsequent
  * class, is that the values cannot be altered.
+ *
+ * Interface ImmutableInterface
+ * @package Extended\Immutable
  */
 interface ImmutableInterface
 {

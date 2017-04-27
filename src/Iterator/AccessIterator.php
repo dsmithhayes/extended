@@ -1,9 +1,17 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\Iterator;
 
 use Extended\Mutable\GetInterface;
 
+/**
+ * Interface AccessIterator
+ * @package Extended\Iterator
+ */
 interface AccessIterator extends \Iterator, GetInterface
 {
     /**

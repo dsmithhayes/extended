@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended;
 
 use ArrayAccess;
@@ -7,6 +11,10 @@ use Extended\Collections\Mappable;
 use Extended\Collections\InlineMappable;
 use Extended\Exception\MappableException;
 
+/**
+ * Class MappableArray
+ * @package Extended
+ */
 class MappableArray implements ArrayAccess, Mappable, InlineMappable
 {
     /**
@@ -62,11 +70,12 @@ class MappableArray implements ArrayAccess, Mappable, InlineMappable
      */
     public function offsetSet($offset, $value)
     {
-        if (!$this->offsetExists($offset)) {
-            throw new MappableException("Array key: '{$offset}' does not exist.");
+        if (is_null($this->store[$offset])) {
+            $this->store[] = $value;
+        } else {
+            $this->store[$offset] = $value;
         }
 
-        $this->store[$offset] = $value;
         return $this;
     }
 

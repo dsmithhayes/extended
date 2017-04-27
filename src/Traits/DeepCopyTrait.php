@@ -1,15 +1,23 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\Traits;
 
 use Extended\Traits\MapTrait;
 
+/**
+ * Trait DeepCopyTrait
+ * @package Extended\Traits
+ */
 trait DeepCopyTrait
 {
     use MapTrait;
 
     /**
-     * @param mixed $arr
+     * @param mixed $value
      *      The value to copy
      * @return mixed
      *      The deep copied values
