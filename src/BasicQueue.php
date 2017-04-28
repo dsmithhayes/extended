@@ -40,6 +40,8 @@ class BasicQueue implements Queue
      */
     public function dequeue()
     {
-        return array_shift($this->data);
+        $d = array_shift($this->data);
+        $this->data = array_values($this->data);
+        return $d;
     }
 }
