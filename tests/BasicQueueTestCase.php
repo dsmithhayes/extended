@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 use PHPUnit_Framework_TestCase as PHPUnitTestCase;
 use Extended\BasicQueue;
 
