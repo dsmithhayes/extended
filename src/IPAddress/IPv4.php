@@ -6,6 +6,9 @@
 
 namespace Extended\IPAddress;
 
+use Extended\IPAddress\IPv4Utility;
+use Extended\Exception\IPv4Exception;
+
 /**
  * Class IPv4
  * @package Extended\IPAddress
@@ -32,6 +35,9 @@ class IPv4
      */
     protected $octets;
 
+    /**
+     * @var bool
+     */
     protected $private = false;
 
     /**
@@ -42,9 +48,17 @@ class IPv4
     {
         $this->octets = $this->parseOctets($address);
 
-        if ($this->isPrivateAddress($address)) {
+        if (IPv4Utility::isPrivateAddress($address)) {
             $this->private = true;
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getAddress();
     }
 
     /**
@@ -75,17 +89,18 @@ class IPv4
 
     /**
      * @param string $address
+     * @param null $cidr
      * @return array
-     * @throws \Exception
+     * @throws IPv4Exception
      */
-    public function parseOctets(string $address): array
+    public function parseOctets(string $address, &$cidr = null): array
     {
         $octets = explode('.', $address);
         $octets = array_slice($octets, 0, 4);
 
         // Catch the CIDR
         if (preg_match('/\/\d+/', $octets[3])) {
-            list($octets[3]) = explode('/', $octets[3]);
+            list($octets[3], $cidr) = explode('/', $octets[3]);
         }
 
         $octets = array_map(function ($v): int {
@@ -93,72 +108,11 @@ class IPv4
         }, $octets);
 
         foreach ($octets as $octet) {
-            if (!$this->isValidOctet($octet)) {
-                throw new \Exception($octet);
+            if (!IPv4Utility::isValidOctet($octet)) {
+                throw new IPv4Exception("Invalid octet: {$octet}.");
             }
         }
 
         return $octets;
-    }
-
-    /**
-     * @param string $address
-     * @return bool
-     */
-    public function isPrivateClassA(string $address): bool
-    {
-        return (bool) (substr($address, 0, 3) === '10.');
-    }
-
-    /**
-     * @param string $address
-     * @return bool
-     */
-    public function isPrivateClassB(string $address): bool
-    {
-        return (bool) (preg_match('/172\.(1[6-9]|2[0-9]|3[0-2])\./', $address));
-    }
-
-    /**
-     * @param string $address
-     * @return bool
-     */
-    public function isPrivateClassC(string $address): bool
-    {
-        return (bool) (substr($address, 0, 8) === '192.168.');
-    }
-
-    /**
-     * @param string $address
-     * @return bool
-     */
-    public function isPrivateAddress(string $address = ''): bool
-    {
-        if (!$address) {
-            return $this->private;
-        }
-
-        if ($this->isPrivateClassA($address)) {
-            return true;
-        }
-
-        if ($this->isPrivateClassB($address)) {
-            return true;
-        }
-
-        if ($this->isPrivateClassC($address)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param int $octet
-     * @return bool
-     */
-    public function isValidOctet(int $octet): bool
-    {
-        return (bool) ($octet >= self::MIN_OCTET || $octet <= self::MAX_OCTET);
     }
 }
