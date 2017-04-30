@@ -188,4 +188,22 @@ class IPv4Utility
         $last = explode('.', $address)[3];
         return (bool) (preg_match('/\/\d+/', $last));
     }
+
+    /**
+     * @param string $address
+     * @return int
+     */
+    public static function addressToLong(string $address): int
+    {
+        return ip2long($address);
+    }
+
+    /**
+     * @param int $long
+     * @return string
+     */
+    public static function longToAddress(int $long): string
+    {
+        return long2ip($long);
+    }
 }

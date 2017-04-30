@@ -115,4 +115,12 @@ class IPv4
 
         return $octets;
     }
+
+    /**
+     * @return int
+     */
+    public function toLong(): int
+    {
+        return ip2long($this->getAddress());
+    }
 }

@@ -1,30 +1,21 @@
 <?php
 
+/**
+ * @author Dave Smith-Hayes <me@davesmithhayes.com>
+ */
+
 namespace Extended\IPAddress;
 
+/**
+ * Class NetworkMask
+ * @package Extended\IPAddress
+ */
 abstract class NetworkMask
 {
     /**
-     * @var string
-     */
-    protected $mask;
-
-    /**
-     * @var array
-     */
-    protected $maskOctets;
-
-    /**
-     * @var array
-     */
-    protected $cidr;
-
-    public function __construct(string $mask)
-    {
-        $this->mask = $mask;
-    }
-
-    /**
+     * This method implies the internally stored mask will be applied against
+     * the address supplied as a parameter.
+     *
      * @param string $address
      * @return string
      */
