@@ -47,10 +47,7 @@ class IPv4
     public function __construct(string $address = '127.0.0.1')
     {
         $this->octets = $this->parseOctets($address);
-
-        if (IPv4Utility::isPrivateAddress($address)) {
-            $this->private = true;
-        }
+        $this->private = IPv4Utility::isPrivateAddress($address);
     }
 
     /**
@@ -76,6 +73,7 @@ class IPv4
     public function setAddress(string $address)
     {
         $this->octets = $this->parseOctets($address);
+        $this->private = IPv4Utility::isPrivateAddress($address);
         return $this;
     }
 
@@ -88,24 +86,26 @@ class IPv4
     }
 
     /**
+     * @return bool
+     */
+    public function isPrivateAddress(): bool
+    {
+        return $this->private;
+    }
+
+    /**
      * @param string $address
-     * @param null $cidr
      * @return array
      * @throws IPv4Exception
      */
-    public function parseOctets(string $address, &$cidr = null): array
+    public function parseOctets(string $address): array
     {
-        $octets = explode('.', $address);
-        $octets = array_slice($octets, 0, 4);
+        $octets = IPv4Utility::parseOctets($address);
 
-        // Catch the CIDR
-        if (preg_match('/\/\d+/', $octets[3])) {
-            list($octets[3], $cidr) = explode('/', $octets[3]);
+        // Strip the CIDR
+        if (IPv4Utility::containsCidr($address)) {
+            list($octets[3]) = explode('/', $octets[3]);
         }
-
-        $octets = array_map(function ($v): int {
-            return (int)$v;
-        }, $octets);
 
         foreach ($octets as $octet) {
             if (!IPv4Utility::isValidOctet($octet)) {

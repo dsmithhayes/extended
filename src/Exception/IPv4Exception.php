@@ -6,7 +6,7 @@
 
 namespace Extended\Exception;
 
-use Exception;
+use \Exception;
 
 /**
  * Class IPv4Exception

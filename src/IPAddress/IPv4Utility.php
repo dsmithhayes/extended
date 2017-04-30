@@ -91,7 +91,92 @@ class IPv4Utility
      */
     public static function isValidOctet(int $octet): bool
     {
-        return (bool) ($octet >= self::MIN_OCTET || $octet <= self::MAX_OCTET);
+        return (bool) ($octet >= self::MIN_OCTET && $octet <= self::MAX_OCTET);
+    }
+
+    /**
+     * @param string $address
+     * @return array
+     */
+    public static function parseOctets(string $address): array
+    {
+        if (self::containsCidr($address)) {
+            $address = preg_replace('/\/\d+/', '', $address);
+        }
+
+        $address = explode('.', $address);
+        $address = array_slice($address, 0, 4);
+        $address = array_map(function ($v) {
+            return (int) $v;
+        }, $address);
+
+        return $address;
+    }
+
+    /**
+     * @param string $mask
+     * @return int
+     */
+    public static function maskToCidr(string $mask): int
+    {
+        $octets = self::parseOctets($mask);
+        $binary = '';
+        foreach ($octets as $octet) {
+            $binary .= decbin($octet);
+        }
+
+        $total = 0;
+
+        foreach (str_split($binary) as $bit) {
+            if ($bit === '0') {
+                break;
+            }
+
+            ++$total;
+        }
+
+        return $total;
+    }
+
+    /**
+     * @param int $cidr
+     * @return string
+     */
+    public static function cidrToMask(int $cidr): string
+    {
+        $maskBin = '';
+
+        for ($i = 0; $i < 32; $i++) {
+            if ($i % 8 === 0) {
+                $maskBin .= '.';
+            }
+
+            $maskBin = (($i < $cidr) ? '1' : '0') . $maskBin;
+        }
+
+        $octetsBin = explode('.', $maskBin);
+        $octetsBin = array_slice($octetsBin, 0, 4);
+
+        foreach ($octetsBin as $octet) {
+            $octets[] = bindec($octet);
+        }
+
+        return implode('.', $octets);
+    }
+
+    /**
+     * @param string $address
+     * @return int
+     */
+    public static function parseCidr(string $address): int
+    {
+        if (!self::containsCidr($string)) {
+            return 0;
+        }
+
+        $last = explode('.', $address)[3];
+        $cidr = preg_split('/\//', $last)[1];
+        return (int) $cidr;
     }
 
     /**
