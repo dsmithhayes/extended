@@ -95,6 +95,24 @@ class IPv4Utility
     }
 
     /**
+     * @param int $octet
+     * @return int
+     */
+    public static function floorOctet(int $octet): int
+    {
+        return ($octet < self::MIN_OCTET) ? self::MIN_OCTET : $octet;
+    }
+
+    /**
+     * @param int $octet
+     * @return int
+     */
+    public static function ceilOctet(int $octet): int
+    {
+        return ($octet > self::MIN_OCTET) ? self::MAX_OCTET : $octet;
+    }
+
+    /**
      * @param string $address
      * @return array
      */
@@ -107,7 +125,7 @@ class IPv4Utility
         $address = explode('.', $address);
         $address = array_slice($address, 0, 4);
         $address = array_map(function ($v) {
-            return (int) $v;
+            return intval($v);
         }, $address);
 
         return $address;
@@ -170,7 +188,7 @@ class IPv4Utility
      */
     public static function parseCidr(string $address): int
     {
-        if (!self::containsCidr($string)) {
+        if (!self::containsCidr($address)) {
             return 0;
         }
 

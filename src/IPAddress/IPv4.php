@@ -41,11 +41,17 @@ class IPv4
     protected $private = false;
 
     /**
+     * @var int
+     */
+    protected $cidr;
+
+    /**
      * IPv4 constructor.
      * @param string $address
      */
     public function __construct(string $address = '127.0.0.1')
     {
+        $this->cidr = IPv4Utility::parseCidr($address);
         $this->octets = $this->parseOctets($address);
         $this->private = IPv4Utility::isPrivateAddress($address);
     }
@@ -94,6 +100,14 @@ class IPv4
     }
 
     /**
+     * @return bool
+     */
+    public function isPublicAddress(): bool
+    {
+        return !$this->isPrivateAddress();
+    }
+
+    /**
      * @param string $address
      * @return array
      * @throws IPv4Exception
@@ -122,5 +136,13 @@ class IPv4
     public function toLong(): int
     {
         return ip2long($this->getAddress());
+    }
+
+    /**
+     * @return int
+     */
+    public function getCidr(): int
+    {
+        return $this->cidr;
     }
 }

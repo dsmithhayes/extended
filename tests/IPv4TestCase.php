@@ -5,8 +5,7 @@
  */
 
 use PHPUnit_Framework_TestCase as PHPUnitTestCase;
-use Extended\IPAddress\IPv4;
-use Extended\IPAddress\IPv4Utility;
+use Extended\IPAddress\{IPv4, IPv4Utility};
 use Extended\Exception\IPv4Exception;
 
 /**
